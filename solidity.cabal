@@ -40,18 +40,18 @@ common config
     -fwrite-ide-info -Wunused-packages
 
   build-depends:
-    , base  ^>=4.16
-    , text  ^>=2
+    , base  >=4.17
+    , text  >=2
 
 library
   import:          config
   exposed-modules: Solidity
   hs-source-dirs:  src
   build-depends:
-    , containers          ^>=0.6
-    , megaparsec          ^>=9.3
-    , optics              ^>=0.4
-    , parser-combinators  ^>=1.3
+    , containers          >=0.6
+    , megaparsec          >=9.3
+    , optics              >=0.4
+    , parser-combinators  >=1.3
 
   other-modules:
     Identifiers
