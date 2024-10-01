@@ -59,7 +59,11 @@
                 ( StateVariableDec
                     { kind = MappingType
                         ( MappingDefinition
-                            { mapping = MappingElementaryType Address
+                            { mapping = MappingKey
+                                { mappingKeyType = MappingElementaryType Address
+                                , mappingKeyIdentifier = Just
+                                    ( Identifier "addr" )
+                                }
                             , kind = IdentifierType
                                 ( IdentifierPath
                                     [ Identifier "Voter" ]

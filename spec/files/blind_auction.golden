@@ -60,7 +60,10 @@
                 ( StateVariableDec
                     { kind = MappingType
                         ( MappingDefinition
-                            { mapping = MappingElementaryType Address
+                            { mapping = MappingKey
+                                { mappingKeyType = MappingElementaryType Address
+                                , mappingKeyIdentifier = Nothing
+                                }
                             , kind = ArrayType
                                 ( IdentifierType
                                     ( IdentifierPath
@@ -94,7 +97,10 @@
                 ( StateVariableDec
                     { kind = MappingType
                         ( MappingDefinition
-                            { mapping = MappingElementaryType Address
+                            { mapping = MappingKey
+                                { mappingKeyType = MappingElementaryType Address
+                                , mappingKeyIdentifier = Nothing
+                                }
                             , kind = ElementaryType ( UnsignedInteger Nothing )
                             }
                         )

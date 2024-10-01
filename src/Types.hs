@@ -520,7 +520,10 @@ data MappingKeyType
   | MappingIdentifier IdentifierPath
   deriving stock (Show, Read, Eq, Ord, Generic)
 
-data MappingDefinition = MappingDefinition {mapping :: MappingKeyType, kind :: TypeName}
+data MappingKey = MappingKey { mappingKeyType :: MappingKeyType, mappingKeyIdentifier :: Maybe Identifier }
+  deriving stock (Show, Read, Eq, Ord, Generic)
+
+data MappingDefinition = MappingDefinition {mapping :: MappingKey, kind :: TypeName}
   deriving stock (Show, Read, Eq, Ord, Generic)
 
 data TypeName

@@ -28,10 +28,13 @@
                 ( StateVariableDec
                     { kind = MappingType
                         ( MappingDefinition
-                            { mapping = MappingElementaryType
-                                ( UnsignedInteger
-                                    ( Just 256 )
-                                )
+                            { mapping = MappingKey
+                                { mappingKeyType = MappingElementaryType
+                                    ( UnsignedInteger
+                                        ( Just 256 )
+                                    )
+                                , mappingKeyIdentifier = Nothing
+                                }
                             , kind = ElementaryType Bool
                             }
                         )

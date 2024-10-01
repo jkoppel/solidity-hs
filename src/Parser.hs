@@ -749,8 +749,8 @@ parseMappingType = do
   where
     parseMappingKey =
       choice
-        [ MappingElementaryType <$> parseElementaryTypeName,
-          MappingIdentifier <$> parseIdentifierPath
+        [ MappingKey <$> (MappingElementaryType <$> parseElementaryTypeName) <*> optional parseIdentifier,
+          MappingKey <$> (MappingIdentifier <$> parseIdentifierPath) <*> optional parseIdentifier
         ]
         <* sc
 
