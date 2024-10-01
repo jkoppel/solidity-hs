@@ -348,6 +348,7 @@ data MemberAccessType
 
 data Expression
   = IndexExpression Expression Expression
+  | SliceExpression Expression (Maybe Expression) (Maybe Expression)
   | MemberAccess Expression MemberAccessType
   | FunctionCallOptions Expression CallArgument
   | FunctionCall Expression CallArgument
@@ -367,6 +368,7 @@ data Expression
 
 showExpression :: Expression -> Text
 showExpression (IndexExpression e1 e2) = showExpression e1 <> "[" <> showExpression e2 <> "]"
+showExpression (SliceExpression e1 e2 e3) = showExpression e1 <> "[" <> maybe "" showExpression e2 <> ":" <> maybe "" showExpression e3 <> "]"
 showExpression (MemberAccess expr access) = showExpression expr <> "." <> T.pack (show access)
 showExpression (FunctionCallOptions expr call) = showExpression expr <> showCallArgument call
 showExpression (FunctionCall expr call) = showExpression expr <> showCallArgument call
@@ -437,7 +439,6 @@ data BinaryOp
   | AssignMul -- expr *= expr
   | AssignDiv -- expr /= expr
   | AssignMod -- expr %= expr
-  | Range -- expr : expr
   deriving stock (Show, Read, Eq, Ord, Generic)
 
 showBinaryOp :: BinaryOp -> Expression -> Expression -> Text
@@ -473,7 +474,6 @@ showBinaryOp AssignSub e1 e2 = showExpression e1 <> " -= " <> showExpression e2
 showBinaryOp AssignMul e1 e2 = showExpression e1 <> " *= " <> showExpression e2
 showBinaryOp AssignDiv e1 e2 = showExpression e1 <> " /= " <> showExpression e2
 showBinaryOp AssignMod e1 e2 = showExpression e1 <> " %= " <> showExpression e2
-showBinaryOp Range e1 e2 = showExpression e1 <> " : " <> showExpression e2
 
 data ElementaryTypeName
   = Address

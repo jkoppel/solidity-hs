@@ -397,7 +397,7 @@ parseTryStatement = do
   pure $ TryStatement {expr, ret, body, catch}
   where
     parseExpr = makeExprParser parseExpression' parseTbl <* sc
-    parseTbl = [Postfix $ foldr1 (flip (.)) <$> some (parseIndex <|> parseMemberAccess <|> parseFunctionCall)] : tail parseTable
+    parseTbl = [Postfix $ foldr1 (flip (.)) <$> some (parseIndex <|> parseSlice <|> parseMemberAccess <|> parseFunctionCall)] : tail parseTable
 
 parseCatchClause :: Parser CatchClause
 parseCatchClause = do
@@ -785,6 +785,13 @@ parseColonSeparated pA pB = pA >>= \a -> keyword ":" *> pB <* sc >>= \b -> pure 
 parseIndex :: Parser (Expression -> Expression)
 parseIndex = flip IndexExpression <$> brackets parseExpression
 
+parseSlice :: Parser (Expression -> Expression)
+parseSlice = try $ brackets $ do
+  start <- try $ optional parseExpression
+  _ <- keyword ":"
+  end <- try $ optional parseExpression
+  return $ \e -> SliceExpression e start end
+
 parseMemberAccess :: Parser (Expression -> Expression)
 parseMemberAccess = flip MemberAccess <$> (keyword "." *> parseAccess)
   where
@@ -792,7 +799,7 @@ parseMemberAccess = flip MemberAccess <$> (keyword "." *> parseAccess)
 
 parseFunctionCallOptions :: Parser (Expression -> Expression)
 parseFunctionCallOptions = flip FunctionCallOptions <$> opts
-  where
+ where
     opts = NamedArguments <$> braces (sepEndBy (parseColonSeparated parseIdentifier parseExpression) comma)
 
 parseFunctionCall :: Parser (Expression -> Expression)
@@ -817,7 +824,7 @@ postfix name f = Postfix (f <$ symbol name)
 
 parseTable :: [[Operator Parser Expression]]
 parseTable =
-  [ [Postfix $ foldr1 (flip (.)) <$> some (parseIndex <|> parseMemberAccess <|> parseFunctionCallOptions <|> parseFunctionCall)],
+  [ [Postfix $ foldr1 (flip (.)) <$> some (parseSlice <|> parseIndex <|> parseMemberAccess <|> parseFunctionCallOptions <|> parseFunctionCall)],
     [ prefix "++" (UnaryExpression UPreInc),
       prefix "--" (UnaryExpression UPreDec),
       prefix "!" (UnaryExpression UPreNot),
@@ -866,8 +873,7 @@ parseTable =
       binaryR "*=" (BinaryExpression AssignMul),
       binaryR "/=" (BinaryExpression AssignDiv),
       binaryR "%=" (BinaryExpression AssignMod)
-    ],
-    [binary ":" (BinaryExpression Range)]
+    ]
   ]
 
 parseSolidity :: Parser Solidity
