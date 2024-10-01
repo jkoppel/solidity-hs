@@ -362,7 +362,7 @@ data Expression
   | InlineArrayExpression [Expression]
   | IdentifierExpression Identifier
   | ExpressionLiteral Literal
-  | ElementaryTypeExpression ElementaryTypeName
+  | TypeExpression TypeName
   | Empty -- only used in tuple expressions
   deriving stock (Show, Read, Eq, Ord, Generic)
 
@@ -382,7 +382,7 @@ showExpression (TupleExpression exprs) = "(" <> T.intercalate "," (map (maybe ""
 showExpression (InlineArrayExpression exprs) = "[" <> T.intercalate "," (map showExpression exprs) <> "]"
 showExpression (IdentifierExpression ident) = showIdentifier ident
 showExpression (ExpressionLiteral lit) = showLiteral lit
-showExpression (ElementaryTypeExpression e) = showElementayType e
+showExpression (TypeExpression e) = showTypeName e
 showExpression Empty = ""
 
 data UnaryOp

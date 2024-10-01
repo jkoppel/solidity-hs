@@ -802,8 +802,10 @@
                                                 )
                                             )
                                             ( FunctionCall
-                                                ( ElementaryTypeExpression
-                                                    ( FixedBytes 32 )
+                                                ( TypeExpression
+                                                    ( ElementaryType
+                                                        ( FixedBytes 32 )
+                                                    )
                                                 )
                                                 ( CommaArguments
                                                     [ ExpressionLiteral
@@ -1060,7 +1062,8 @@
                                     ( IdentifierExpression
                                         ( Identifier "highestBidder" )
                                     )
-                                    ( FunctionCall ( ElementaryTypeExpression Address )
+                                    ( FunctionCall
+                                        ( TypeExpression ( ElementaryType Address ) )
                                         ( CommaArguments
                                             [ ExpressionLiteral
                                                 ( NumberLiteral 0.0 Nothing )

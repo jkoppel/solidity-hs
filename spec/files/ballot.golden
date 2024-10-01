@@ -425,7 +425,8 @@
                                             ( Identifier "delegate" )
                                         )
                                     )
-                                    ( FunctionCall ( ElementaryTypeExpression Address )
+                                    ( FunctionCall
+                                        ( TypeExpression ( ElementaryType Address ) )
                                         ( CommaArguments
                                             [ ExpressionLiteral
                                                 ( NumberLiteral 0.0 Nothing )

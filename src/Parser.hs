@@ -775,7 +775,7 @@ parseExpression' =
       InlineArrayExpression <$> brackets (sepEndBy parseExpression' comma),
       IdentifierExpression <$> try parseIdentifier,
       ExpressionLiteral <$> parseLiteral,
-      ElementaryTypeExpression <$> parseElementaryTypeName
+      TypeExpression <$> parseTypeName
     ]
     <* sc
 

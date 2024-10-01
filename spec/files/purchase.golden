@@ -397,7 +397,8 @@
                                 )
                                 ( CommaArguments
                                     [ MemberAccess
-                                        ( FunctionCall ( ElementaryTypeExpression Address )
+                                        ( FunctionCall
+                                            ( TypeExpression ( ElementaryType Address ) )
                                             ( CommaArguments
                                                 [ IdentifierExpression
                                                     ( Identifier "this" )
