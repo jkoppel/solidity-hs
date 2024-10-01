@@ -40,7 +40,7 @@ common config
     -fwrite-ide-info -Wunused-packages
 
   build-depends:
-    , base  ^>=4.16
+    , base  (^>=4.16 || ^>=4.17)
     , text  ^>=2
 
 library
