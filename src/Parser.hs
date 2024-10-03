@@ -4,6 +4,7 @@ module Parser where
 
 import Control.Monad (void)
 import Control.Monad.Combinators.Expr (Operator (..), makeExprParser)
+import Data.Char (chr)
 import Data.List.NonEmpty qualified as NE
 import Data.Maybe (isJust)
 import Data.Set qualified as S
@@ -79,14 +80,22 @@ brackets = between (symbol "[") (symbol "]")
 braces :: Parser a -> Parser a
 braces = between (symbol "{") (symbol "}")
 
-charLiteral :: Parser Char
-charLiteral = between (char '\'') (char '\'') L.charLiteral
+unicodeEscape :: Parser Char
+unicodeEscape = try $ do
+    void $ string "\\u"
+    code <- count 4 hexDigitChar
+    pure $ chr $ read $ "0x" ++ code
 
+charLiteral :: Parser Char
+charLiteral = between (char '\'') (char '\'') (unicodeEscape <|> L.charLiteral)
+
+-- NOTE Oct 2, 2024: Still many differences between L.charLiteral and Solidity chars.
+--                   E.g.: \x takes two digits in Solidity, but many more in L.charLiteral
 stringLiteral' :: Parser Text
-stringLiteral' = T.pack <$> (char '\'' *> manyTill L.charLiteral (char '\''))
+stringLiteral' = T.pack <$> (char '\'' *> manyTill (unicodeEscape <|> L.charLiteral) (char '\''))
 
 stringLiteral :: Parser Text
-stringLiteral = T.pack <$> (char '\"' *> manyTill L.charLiteral (char '\"'))
+stringLiteral = T.pack <$> (char '\"' *> manyTill (unicodeEscape <|> L.charLiteral) (char '\"'))
 
 parsePragma :: Parser PragmaDefinition
 parsePragma = keyword "pragma" *> takeWhile1P Nothing (/= ';') <* semi >>= pure <$> PragmaDefinition <?> "Pragma"
@@ -694,8 +703,8 @@ parseLiteral =
   choice
     [ BooleanLiteral True <$ keyword "true",
       BooleanLiteral False <$ keyword "false",
-      StringLiteral . T.pack <$> (char '"' >> manyTill L.charLiteral (char '"')),
-      StringLiteral . T.pack <$> (char '\'' >> manyTill L.charLiteral (char '\'')),
+      StringLiteral <$> stringLiteral,
+      StringLiteral <$> stringLiteral',
       NumberLiteral <$> lexeme (chunk "0x" >> L.hexadecimal) <*> optional parseNumberUnit,
       parseNumberLiteral,
       HexStringLiteral . T.pack <$> try (keyword "hex" >> char '"' >> manyTill L.charLiteral (char '"')),

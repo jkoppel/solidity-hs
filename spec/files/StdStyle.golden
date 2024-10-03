@@ -1,0 +1,4165 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity >=0.4.22 <0.9.0" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "VmSafe"
+                , Nothing
+                )
+            ] "./Vm.sol"
+        )
+    )
+, Library
+    ( LibraryDefinition
+        { name = Identifier "StdStyle"
+        , body =
+            [ CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "VmSafe" ]
+                        )
+                    , modifiers = Just
+                        [ StatePrivate
+                        , StateConstant
+                        ]
+                    , ident = Identifier "vm"
+                    , expr = Just
+                        ( FunctionCall
+                            ( IdentifierExpression
+                                ( Identifier "VmSafe" )
+                            )
+                            ( CommaArguments
+                                [ FunctionCall
+                                    ( TypeExpression ( ElementaryType Address ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( TypeExpression
+                                                ( ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 160 )
+                                                    )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ FunctionCall
+                                                    ( TypeExpression
+                                                        ( ElementaryType
+                                                            ( UnsignedInteger
+                                                                ( Just 256 )
+                                                            )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( IdentifierExpression
+                                                                ( Identifier "keccak256" )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ ExpressionLiteral
+                                                                    ( StringLiteral "hevm cheat code" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "RED"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[91m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "GREEN"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[92m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "YELLOW"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[93m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "BLUE"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[94m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "MAGENTA"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[95m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "CYAN"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[96m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "BOLD"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[1m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "DIM"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[2m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "ITALIC"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[3m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "UNDERLINE"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[4m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "INVERSE"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[7m" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "RESET"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "\x1b[0m" )
+                        )
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "styleConcat"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "style" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "style" )
+                                                , IdentifierExpression
+                                                    ( Identifier "self" )
+                                                , IdentifierExpression
+                                                    ( Identifier "RESET" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "red"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "RED" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "red"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "red" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "red"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "red" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "red"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "red" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "red"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "red" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "redBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "red" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "redBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "red" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "green"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "GREEN" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "green"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "green" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "green"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "green" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "green"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "green" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "green"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "green" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "greenBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "green" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "greenBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "green" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellow"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "YELLOW" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellow"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "yellow" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellow"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "yellow" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellow"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "yellow" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellow"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "yellow" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellowBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "yellow" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "yellowBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "yellow" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blue"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "BLUE" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blue"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "blue" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blue"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "blue" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blue"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "blue" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blue"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "blue" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blueBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "blue" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "blueBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "blue" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magenta"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "MAGENTA" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magenta"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "magenta" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magenta"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "magenta" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magenta"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "magenta" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magenta"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "magenta" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magentaBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "magenta" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "magentaBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "magenta" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyan"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "CYAN" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyan"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "cyan" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyan"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "cyan" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyan"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "cyan" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyan"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "cyan" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyanBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "cyan" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "cyanBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "cyan" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "bold"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "BOLD" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "bold"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "bold" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "bold"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "bold" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "bold"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "bold" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "bold"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "bold" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "boldBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "bold" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "boldBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "bold" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dim"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "DIM" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dim"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "dim" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dim"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "dim" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dim"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "dim" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dim"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "dim" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dimBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "dim" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "dimBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "dim" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italic"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "ITALIC" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italic"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "italic" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italic"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "italic" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italic"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "italic" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italic"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "italic" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italicBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "italic" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "italicBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "italic" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underline"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "UNDERLINE" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underline"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "underline" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underline"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "underline" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underline"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "underline" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underline"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "underline" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underlineBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "underline" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "underlineBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "underline" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverse"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "styleConcat" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "INVERSE" )
+                                        , IdentifierExpression
+                                            ( Identifier "self" )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverse"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "inverse" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverse"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "inverse" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverse"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "inverse" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverse"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "inverse" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverseBytes"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "inverse" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "inverseBytes32"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "self" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "inverse" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "vm" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toString" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "self" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]
