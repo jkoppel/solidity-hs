@@ -1,6 +1,6 @@
 module Solidity.ContractSpec (spec) where
 
-import Solidity (ContractDefinition (..), Identifier (Identifier), IdentifierPath (IdentifierPath), InheritanceSpecifier (InheritanceSpecifier), parseContract)
+import Solidity
 import Test.Hspec
 import Test.Hspec.Megaparsec
 import TestUtils (testParse)
@@ -24,3 +24,22 @@ spec = parallel $ do
             inheritance = Just [InheritanceSpecifier (IdentifierPath [Identifier "Parent"]) Nothing],
             body = []
           }
+
+  describe "Parses using directives" $ do
+     it "parses using statement with binders" $ do
+      testParse parseContractBody "using {add as +, sub as -} for BalanceDelta global;" `shouldParse`
+        [
+          CUsing (
+            UsingDirective {
+              binders=
+                UsingDirectiveAliases [
+                  UsingDirectiveAlias (IdentifierPath [Identifier "add"]) 
+                                      (Just $ ABinaryOp Add),
+                  UsingDirectiveAlias (IdentifierPath [Identifier "sub"])
+                                      (Just $ ABinaryOp Sub)
+                ],
+              bound=DirectiveType (IdentifierType $ IdentifierPath [Identifier "BalanceDelta"]),
+              global=True
+            }
+          )
+        ]

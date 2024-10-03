@@ -6366,14 +6366,17 @@
         , body =
             [ CUsing
                 ( UsingDirective
-                    { ident = IdentifierPath
-                        [ Identifier "stdStorage" ]
+                    { binders = UsingDirectiveBoundIdent
+                        ( IdentifierPath
+                            [ Identifier "stdStorage" ]
+                        )
                     , bound = DirectiveType
                         ( IdentifierType
                             ( IdentifierPath
                                 [ Identifier "StdStorage" ]
                             )
                         )
+                    , global = False
                     }
                 )
             , CStateVariableDec

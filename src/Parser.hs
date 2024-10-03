@@ -196,14 +196,42 @@ parseReceiveFunction = do
   body <- semi *> (BlockStatement <$> mempty) <|> parseBlock
   pure $ ReceiveFunctionDefinition {restrictions, body}
 
+parseUsingAlias :: Parser UsingDirectiveAlias
+parseUsingAlias = do
+  ident <- parseIdentifierPath
+  op <- optional $ do
+    void $ keyword "as"
+    choice [
+      symbol "~" >> pure (AUnaryOp UPreBitNot),
+      symbol "&" >> pure (ABinaryOp BitAnd),
+      symbol "|" >> pure (ABinaryOp BitOr),
+      symbol "^" >> pure (ABinaryOp BitXor),
+      symbol "+" >> pure (ABinaryOp Add),
+      symbol "/" >> pure (ABinaryOp Div),
+      symbol "%" >> pure (ABinaryOp Mod),
+      symbol "*" >> pure (ABinaryOp Mul),
+      symbol "-" >> pure (ABinaryOp Sub),
+      symbol "==" >> pure (ABinaryOp Equal),
+      symbol ">" >> pure (ABinaryOp GreaterThan),
+      symbol ">=" >> pure (ABinaryOp GreaterEqual),
+      symbol "<" >> pure (ABinaryOp LessThan),
+      symbol "<=" >> pure (ABinaryOp LessEqual),
+      symbol "!=" >> pure (ABinaryOp NotEqual)
+     ]
+  pure $ UsingDirectiveAlias {ident, op}
+
 parseUsingDirective :: Parser UsingDirective
 parseUsingDirective = do
   void (keyword "using") <?> "using"
-  ident <- parseIdentifierPath <?> "using path"
+  binders <- choice [
+    UsingDirectiveAliases <$> braces (sepBy parseUsingAlias comma),
+    UsingDirectiveBoundIdent <$> parseIdentifierPath <?> "using path"
+   ]
   void $ keyword "for"
   bound <- choice [DirectiveAll <$ "*", DirectiveType <$> parseTypeName] <?> "using bound"
+  global <- isJust <$> optional (keyword "global")
   void semi
-  pure UsingDirective {ident, bound}
+  pure UsingDirective {binders, bound, global}
 
 parseErrorDefinition :: Parser ErrorDefinition
 parseErrorDefinition = do
@@ -902,6 +930,7 @@ parseSolidity = sc *> (Solidity <$> syntax) <* eof
       (many . choice)
         [ Pragma <$> parsePragma,
           Import <$> parseImport,
+          Using <$> parseUsingDirective,
           Contract <$> parseContract,
           Interface <$> parseInterface,
           Library <$> parseLibrary,

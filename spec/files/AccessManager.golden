@@ -93,9 +93,12 @@
         , body =
             [ CUsing
                 ( UsingDirective
-                    { ident = IdentifierPath
-                        [ Identifier "Time" ]
+                    { binders = UsingDirectiveBoundIdent
+                        ( IdentifierPath
+                            [ Identifier "Time" ]
+                        )
                     , bound = DirectiveAll
+                    , global = False
                     }
                 )
             , CStruct

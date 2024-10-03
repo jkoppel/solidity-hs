@@ -102,9 +102,21 @@ data LibraryDefinition = LibraryDefinition
   }
   deriving stock (Show, Read, Eq, Ord, Generic)
 
-data UsingDirective = UsingDirective
+data UsingDirectiveAlias = UsingDirectiveAlias
   { ident :: IdentifierPath,
-    bound :: DirectiveBind
+    op :: Maybe AnyOp
+  }
+  deriving stock (Show, Read, Eq, Ord, Generic)
+
+data UsingDirectiveBinders
+  = UsingDirectiveBoundIdent IdentifierPath
+  | UsingDirectiveAliases [UsingDirectiveAlias]
+  deriving stock (Show, Read, Eq, Ord, Generic)
+
+data UsingDirective = UsingDirective
+  { binders :: UsingDirectiveBinders,
+    bound :: DirectiveBind,
+    global :: Bool
   }
   deriving stock (Show, Read, Eq, Ord, Generic)
 
@@ -207,6 +219,7 @@ data NumberUnit = Wei | Gwei | Ether | Seconds | Minutes | Hours | Days | Weeks 
 data SourceUnit
   = Pragma PragmaDefinition
   | Import ImportDefinition
+  | Using UsingDirective
   | Contract ContractDefinition
   | Interface InterfaceDefinition
   | Library LibraryDefinition
@@ -440,6 +453,12 @@ data BinaryOp
   | AssignDiv -- expr /= expr
   | AssignMod -- expr %= expr
   deriving stock (Show, Read, Eq, Ord, Generic)
+
+data AnyOp
+  = ABinaryOp BinaryOp
+  | AUnaryOp  UnaryOp
+  deriving stock (Show, Read, Eq, Ord, Generic)
+
 
 showBinaryOp :: BinaryOp -> Expression -> Expression -> Text
 showBinaryOp Exp e1 e2 = showExpression e1 <> " ** " <> showExpression e2

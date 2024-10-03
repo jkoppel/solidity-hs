@@ -1,6 +1,6 @@
 cabal-version:      3.0
 name:               solidity
-version:            0.1.0.7
+version:            0.1.0.8
 author:             Sondre Aasemoen
 maintainer:         sondre@eons.io
 synopsis:           A parser for the Solidity smart contract language

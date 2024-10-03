@@ -1,0 +1,1011 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity ^0.8.0" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "SafeCast"
+                , Nothing
+                )
+            ] "../libraries/SafeCast.sol"
+        )
+    )
+, UserDefinedType
+    ( UserDefinedValueDefinition
+        { ident = Identifier "BalanceDelta"
+        , kind = SignedInteger
+            ( Just 256 )
+        }
+    )
+, Using
+    ( UsingDirective
+        { binders = UsingDirectiveAliases
+            [ UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "add" ]
+                , op = Just ( ABinaryOp Add )
+                }
+            , UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "sub" ]
+                , op = Just ( ABinaryOp Sub )
+                }
+            , UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "eq" ]
+                , op = Just ( ABinaryOp Equal )
+                }
+            , UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "neq" ]
+                , op = Just ( ABinaryOp NotEqual )
+                }
+            ]
+        , bound = DirectiveType
+            ( IdentifierType
+                ( IdentifierPath
+                    [ Identifier "BalanceDelta" ]
+                )
+            )
+        , global = True
+        }
+    )
+, Using
+    ( UsingDirective
+        { binders = UsingDirectiveBoundIdent
+            ( IdentifierPath
+                [ Identifier "BalanceDeltaLibrary" ]
+            )
+        , bound = DirectiveType
+            ( IdentifierType
+                ( IdentifierPath
+                    [ Identifier "BalanceDelta" ]
+                )
+            )
+        , global = True
+        }
+    )
+, Using
+    ( UsingDirective
+        { binders = UsingDirectiveBoundIdent
+            ( IdentifierPath
+                [ Identifier "SafeCast" ]
+            )
+        , bound = DirectiveType
+            ( ElementaryType
+                ( SignedInteger
+                    ( Just 256 )
+                )
+            )
+        , global = False
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "toBalanceDelta"
+        , params =
+            [ Parameter
+                { kind = ElementaryType
+                    ( SignedInteger
+                        ( Just 128 )
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "_amount0" )
+                }
+            , Parameter
+                { kind = ElementaryType
+                    ( SignedInteger
+                        ( Just 128 )
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "_amount1" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "balanceDelta" )
+                }
+            ]
+        , body = BlockStatement
+            [ Assembly
+                ( AssemblyStatement
+                    { dialect = Nothing
+                    , flags = [ "memory-safe" ]
+                    , body =
+                        [ YulAssignment
+                            ( YulAssignmentDeclaration
+                                ( YulIdentifierPath
+                                    [ YulIdentifier
+                                        ( Identifier "balanceDelta" )
+                                    ]
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "or" )
+                                        , body =
+                                            [ YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "shl" )
+                                                    , body =
+                                                        [ YulExpressionLiteral
+                                                            ( YulDecimalNumber 128 )
+                                                        , YulExpressionPath
+                                                            ( YulIdentifierPath
+                                                                [ YulIdentifier
+                                                                    ( Identifier "_amount0" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    }
+                                                )
+                                            , YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "and" )
+                                                    , body =
+                                                        [ YulExpressionFunctionCall
+                                                            ( YulFunctionCallDeclaration
+                                                                { ident = YulEvmBuiltin
+                                                                    ( Identifier "sub" )
+                                                                , body =
+                                                                    [ YulExpressionFunctionCall
+                                                                        ( YulFunctionCallDeclaration
+                                                                            { ident = YulEvmBuiltin
+                                                                                ( Identifier "shl" )
+                                                                            , body =
+                                                                                [ YulExpressionLiteral
+                                                                                    ( YulDecimalNumber 128 )
+                                                                                , YulExpressionLiteral
+                                                                                    ( YulDecimalNumber 1 )
+                                                                                ]
+                                                                            }
+                                                                        )
+                                                                    , YulExpressionLiteral
+                                                                        ( YulDecimalNumber 1 )
+                                                                    ]
+                                                                }
+                                                            )
+                                                        , YulExpressionPath
+                                                            ( YulIdentifierPath
+                                                                [ YulIdentifier
+                                                                    ( Identifier "_amount1" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    }
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "add"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "a" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "b" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ VariableStatement
+                ( VariableDecStatement
+                    ( VariableDeclaration
+                        { kind = ElementaryType
+                            ( SignedInteger
+                                ( Just 256 )
+                            )
+                        , location = Nothing
+                        , ident = Identifier "res0"
+                        }
+                    ) Nothing
+                )
+            , VariableStatement
+                ( VariableDecStatement
+                    ( VariableDeclaration
+                        { kind = ElementaryType
+                            ( SignedInteger
+                                ( Just 256 )
+                            )
+                        , location = Nothing
+                        , ident = Identifier "res1"
+                        }
+                    ) Nothing
+                )
+            , Assembly
+                ( AssemblyStatement
+                    { dialect = Nothing
+                    , flags = [ "memory-safe" ]
+                    , body =
+                        [ YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "a0" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "sar" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 128 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "a1" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "signextend" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 15 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "b0" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "sar" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 128 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "b1" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "signextend" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 15 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulAssignment
+                            ( YulAssignmentDeclaration
+                                ( YulIdentifierPath
+                                    [ YulIdentifier
+                                        ( Identifier "res0" )
+                                    ]
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "add" )
+                                        , body =
+                                            [ YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a0" )
+                                                    ]
+                                                )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b0" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulAssignment
+                            ( YulAssignmentDeclaration
+                                ( YulIdentifierPath
+                                    [ YulIdentifier
+                                        ( Identifier "res1" )
+                                    ]
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "add" )
+                                        , body =
+                                            [ YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a1" )
+                                                    ]
+                                                )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b1" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , Return
+                ( Just
+                    ( FunctionCall
+                        ( IdentifierExpression
+                            ( Identifier "toBalanceDelta" )
+                        )
+                        ( CommaArguments
+                            [ FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "res0" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "toInt128" )
+                                    )
+                                )
+                                ( CommaArguments [] )
+                            , FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "res1" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "toInt128" )
+                                    )
+                                )
+                                ( CommaArguments [] )
+                            ]
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "sub"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "a" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "b" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ VariableStatement
+                ( VariableDecStatement
+                    ( VariableDeclaration
+                        { kind = ElementaryType
+                            ( SignedInteger
+                                ( Just 256 )
+                            )
+                        , location = Nothing
+                        , ident = Identifier "res0"
+                        }
+                    ) Nothing
+                )
+            , VariableStatement
+                ( VariableDecStatement
+                    ( VariableDeclaration
+                        { kind = ElementaryType
+                            ( SignedInteger
+                                ( Just 256 )
+                            )
+                        , location = Nothing
+                        , ident = Identifier "res1"
+                        }
+                    ) Nothing
+                )
+            , Assembly
+                ( AssemblyStatement
+                    { dialect = Nothing
+                    , flags = [ "memory-safe" ]
+                    , body =
+                        [ YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "a0" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "sar" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 128 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "a1" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "signextend" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 15 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "b0" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "sar" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 128 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulVariableStatement
+                            ( YulVariableDeclaration
+                                ( YulIdentifier
+                                    ( Identifier "b1" )
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "signextend" )
+                                        , body =
+                                            [ YulExpressionLiteral
+                                                ( YulDecimalNumber 15 )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulAssignment
+                            ( YulAssignmentDeclaration
+                                ( YulIdentifierPath
+                                    [ YulIdentifier
+                                        ( Identifier "res0" )
+                                    ]
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "sub" )
+                                        , body =
+                                            [ YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a0" )
+                                                    ]
+                                                )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b0" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        , YulAssignment
+                            ( YulAssignmentDeclaration
+                                ( YulIdentifierPath
+                                    [ YulIdentifier
+                                        ( Identifier "res1" )
+                                    ]
+                                )
+                                ( YulExpressionFunctionCall
+                                    ( YulFunctionCallDeclaration
+                                        { ident = YulEvmBuiltin
+                                            ( Identifier "sub" )
+                                        , body =
+                                            [ YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "a1" )
+                                                    ]
+                                                )
+                                            , YulExpressionPath
+                                                ( YulIdentifierPath
+                                                    [ YulIdentifier
+                                                        ( Identifier "b1" )
+                                                    ]
+                                                )
+                                            ]
+                                        }
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , Return
+                ( Just
+                    ( FunctionCall
+                        ( IdentifierExpression
+                            ( Identifier "toBalanceDelta" )
+                        )
+                        ( CommaArguments
+                            [ FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "res0" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "toInt128" )
+                                    )
+                                )
+                                ( CommaArguments [] )
+                            , FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "res1" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "toInt128" )
+                                    )
+                                )
+                                ( CommaArguments [] )
+                            ]
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "eq"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "a" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "b" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = ElementaryType Bool
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ Return
+                ( Just
+                    ( BinaryExpression Equal
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "BalanceDelta" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "a" )
+                                ]
+                            )
+                        )
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "BalanceDelta" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "b" )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "neq"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "a" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "BalanceDelta" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "b" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = ElementaryType Bool
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ Return
+                ( Just
+                    ( BinaryExpression NotEqual
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "BalanceDelta" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "a" )
+                                ]
+                            )
+                        )
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "BalanceDelta" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "b" )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Library
+    ( LibraryDefinition
+        { name = Identifier "BalanceDeltaLibrary"
+        , body =
+            [ CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "BalanceDelta" ]
+                        )
+                    , modifiers = Just
+                        [ StatePublic
+                        , StateConstant
+                        ]
+                    , ident = Identifier "ZERO_DELTA"
+                    , expr = Just
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "BalanceDelta" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "wrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ ExpressionLiteral
+                                    ( NumberLiteral 0.0 Nothing )
+                                ]
+                            )
+                        )
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "amount0"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "BalanceDelta" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "balanceDelta" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 128 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_amount0" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Assembly
+                            ( AssemblyStatement
+                                { dialect = Nothing
+                                , flags = [ "memory-safe" ]
+                                , body =
+                                    [ YulAssignment
+                                        ( YulAssignmentDeclaration
+                                            ( YulIdentifierPath
+                                                [ YulIdentifier
+                                                    ( Identifier "_amount0" )
+                                                ]
+                                            )
+                                            ( YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "sar" )
+                                                    , body =
+                                                        [ YulExpressionLiteral
+                                                            ( YulDecimalNumber 128 )
+                                                        , YulExpressionPath
+                                                            ( YulIdentifierPath
+                                                                [ YulIdentifier
+                                                                    ( Identifier "balanceDelta" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    }
+                                                )
+                                            )
+                                        )
+                                    ]
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "amount1"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "BalanceDelta" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "balanceDelta" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 128 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_amount1" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Assembly
+                            ( AssemblyStatement
+                                { dialect = Nothing
+                                , flags = [ "memory-safe" ]
+                                , body =
+                                    [ YulAssignment
+                                        ( YulAssignmentDeclaration
+                                            ( YulIdentifierPath
+                                                [ YulIdentifier
+                                                    ( Identifier "_amount1" )
+                                                ]
+                                            )
+                                            ( YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "signextend" )
+                                                    , body =
+                                                        [ YulExpressionLiteral
+                                                            ( YulDecimalNumber 15 )
+                                                        , YulExpressionPath
+                                                            ( YulIdentifierPath
+                                                                [ YulIdentifier
+                                                                    ( Identifier "balanceDelta" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    }
+                                                )
+                                            )
+                                        )
+                                    ]
+                                }
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]

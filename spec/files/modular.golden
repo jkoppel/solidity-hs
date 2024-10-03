@@ -164,9 +164,12 @@
                 )
             , CUsing
                 ( UsingDirective
-                    { ident = IdentifierPath
-                        [ Identifier "Balances" ]
+                    { binders = UsingDirectiveBoundIdent
+                        ( IdentifierPath
+                            [ Identifier "Balances" ]
+                        )
                     , bound = DirectiveAll
+                    , global = False
                     }
                 )
             , CStateVariableDec
