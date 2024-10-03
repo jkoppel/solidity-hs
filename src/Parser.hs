@@ -161,6 +161,15 @@ parseFunction = do
   body <- semi *> (BlockStatement <$> mempty) <|> parseBlock
   pure $ FunctionDefinition {name, params, restrictions, returns, body}
 
+
+parseFunctionType :: Parser FunctionType
+parseFunctionType = do
+  void (keyword "function") <?> "function"
+  params <- parens parseParameterList <?> "function params"
+  restrictions <- parseFunctionRestriction <?> "function restrictions"
+  returns <- optional (keyword "returns" *> parens parseParameterList <?> "function returns")
+  pure $ MkFunctionType {params, restrictions, returns}
+
 parseFallbackFunction :: Parser FallbackFunctionDefinition
 parseFallbackFunction = do
   void (keyword "fallback") <?> "fallback func"
@@ -726,7 +735,7 @@ parseTypeName = do
     parseType =
       choice
         [ ElementaryType <$> parseElementaryTypeName,
-          FunctionType <$> parseFunction,
+          FunctionType <$> parseFunctionType,
           MappingType <$> parseMappingType,
           IdentifierType <$> try parseIdentifierPath
         ]
@@ -773,7 +782,7 @@ parseExpression' =
       NewType <$> try (keyword "new" *> parseTypeName),
       TupleExpression <$> parens (sepEndBy (optional parseExpression) comma),
       InlineArrayExpression <$> brackets (sepEndBy parseExpression' comma),
-      IdentifierExpression <$> try parseIdentifier,
+      IdentifierExpression <$> try (parseIdentifier <* notFollowedBy (symbol "[" >> symbol "]")),
       ExpressionLiteral <$> parseLiteral,
       TypeExpression <$> parseTypeName
     ]

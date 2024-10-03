@@ -526,9 +526,16 @@ data MappingKey = MappingKey { mappingKeyType :: MappingKeyType, mappingKeyIdent
 data MappingDefinition = MappingDefinition {mapping :: MappingKey, kind :: TypeName}
   deriving stock (Show, Read, Eq, Ord, Generic)
 
+data FunctionType = MkFunctionType {
+    params :: [Parameter],
+    restrictions :: [FunctionRestriction],
+    returns :: Maybe [Parameter]
+  }
+  deriving stock (Show, Read, Eq, Ord, Generic)
+  
 data TypeName
   = ElementaryType ElementaryTypeName
-  | FunctionType FunctionDefinition
+  | FunctionType FunctionType
   | MappingType MappingDefinition
   | IdentifierType IdentifierPath
   | ArrayType TypeName [ArrayTypeStatus]

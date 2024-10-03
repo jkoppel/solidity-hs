@@ -139,6 +139,13 @@ types =
     ("bytes", Bytes)
   ]
 
+
+identifierTypes :: [(Text, TypeName)]
+identifierTypes =
+  [ ("Foo", IdentifierType (IdentifierPath [Identifier "Foo"])),
+    ("Foo[]", ArrayType (IdentifierType (IdentifierPath [Identifier "Foo"])) [ArrayTypeEmpty])
+  ]
+
 spec :: Spec
 spec = parallel $ do
   testParseMany parseElementaryTypeName ints "signed integers"
@@ -146,3 +153,4 @@ spec = parallel $ do
   testParseMany parseNumberUnit units "number units"
   testParseMany parseElementaryTypeName bytes "number units"
   testParseMany parseElementaryTypeName types "other types"
+  testParseMany parseTypeName identifierTypes "identifier types"

@@ -1,0 +1,1329 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity 0.8.15" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "@openzeppelin/contracts/access/Ownable.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "./interfaces/IStakingPool.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "./interfaces/IPriorityPool.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "./interfaces/IStrategy.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "./interfaces/ISDLPoolCCIPControllerPrimary.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "./interfaces/IInsurancePool.sol" Nothing )
+    )
+, Contract
+    ( ContractDefinition
+        { abstract = False
+        , name = Identifier "RebaseController"
+        , inheritance = Just
+            [ InheritanceSpecifier
+                ( IdentifierPath
+                    [ Identifier "Ownable" ]
+                ) Nothing
+            ]
+        , body =
+            [ CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "IStakingPool" ]
+                        )
+                    , modifiers = Just [ StatePublic ]
+                    , ident = Identifier "stakingPool"
+                    , expr = Nothing
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "IPriorityPool" ]
+                        )
+                    , modifiers = Just [ StatePublic ]
+                    , ident = Identifier "priorityPool"
+                    , expr = Nothing
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "ISDLPoolCCIPControllerPrimary" ]
+                        )
+                    , modifiers = Just [ StatePublic ]
+                    , ident = Identifier "sdlPoolCCIPController"
+                    , expr = Nothing
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "IInsurancePool" ]
+                        )
+                    , modifiers = Just [ StatePublic ]
+                    , ident = Identifier "insurancePool"
+                    , expr = Nothing
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType Address
+                    , modifiers = Just [ StatePublic ]
+                    , ident = Identifier "rebaseBot"
+                    , expr = Nothing
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType
+                        ( UnsignedInteger
+                            ( Just 256 )
+                        )
+                    , modifiers = Just [ StatePublic ]
+                    , ident = Identifier "maxRebaseLossBP"
+                    , expr = Nothing
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "NoStrategiesToUpdate"
+                    , params = []
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "PositiveDepositChange"
+                    , params = []
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "InvalidMaxRebaseLoss"
+                    , params = []
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "PoolClosed"
+                    , params = []
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "SenderNotAuthorized"
+                    , params = []
+                    }
+                )
+            , Constructor
+                ( ConstructorDefinition
+                    { params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_stakingPool" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_priorityPool" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_sdlPoolCCIPController" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_insurancePool" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_rebaseBot" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_maxRebaseLossBP" )
+                            }
+                        ]
+                    , modifiers = Just []
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "stakingPool" )
+                                )
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "IStakingPool" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "_stakingPool" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "priorityPool" )
+                                )
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "IPriorityPool" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "_priorityPool" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "sdlPoolCCIPController" )
+                                )
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "ISDLPoolCCIPControllerPrimary" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "_sdlPoolCCIPController" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "insurancePool" )
+                                )
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "IInsurancePool" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "_insurancePool" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "rebaseBot" )
+                                )
+                                ( IdentifierExpression
+                                    ( Identifier "_rebaseBot" )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression GreaterThan
+                                    ( IdentifierExpression
+                                        ( Identifier "_maxRebaseLossBP" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 9000.0 Nothing )
+                                    )
+                                , trueStmt = Revert
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "InvalidMaxRebaseLoss" )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "maxRebaseLossBP" )
+                                )
+                                ( IdentifierExpression
+                                    ( Identifier "_maxRebaseLossBP" )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CModifier
+                ( ModifierDefinition
+                    { ident = Identifier "onlyRebaseBot"
+                    , params = Just []
+                    , modifiers = []
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = BinaryExpression NotEqual
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "msg" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "sender" )
+                                        )
+                                    )
+                                    ( IdentifierExpression
+                                        ( Identifier "rebaseBot" )
+                                    )
+                                , trueStmt = Revert
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "SenderNotAuthorized" )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , ExpressionStatement
+                            ( IdentifierExpression
+                                ( Identifier "_" )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "updateRewards"
+                    , params =
+                        [ Parameter
+                            { kind = ArrayType
+                                ( ElementaryType
+                                    ( UnsignedInteger
+                                        ( Just 256 )
+                                    )
+                                ) [ ArrayTypeEmpty ]
+                            , location = Just Calldata
+                            , ident = Just
+                                ( Identifier "_strategyIdxs" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Calldata
+                            , ident = Just
+                                ( Identifier "_data" )
+                            }
+                        , Parameter
+                            { kind = ArrayType
+                                ( ElementaryType
+                                    ( UnsignedInteger
+                                        ( Just 256 )
+                                    )
+                                ) [ ArrayTypeEmpty ]
+                            , location = Just Calldata
+                            , ident = Just
+                                ( Identifier "_gasLimits" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncModifierInvocation
+                            ( ModifierInvocation
+                                { path = IdentifierPath
+                                    [ Identifier "onlyRebaseBot" ]
+                                , args = Nothing
+                                }
+                            )
+                        ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = BinaryExpression Equal
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "priorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "poolStatus" )
+                                            )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                    ( MemberAccess
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "IPriorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "PoolStatus" )
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "CLOSED" )
+                                        )
+                                    )
+                                , trueStmt = Revert
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "PoolClosed" )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "stakingPool" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "updateStrategyRewards" )
+                                    )
+                                )
+                                ( CommaArguments
+                                    [ IdentifierExpression
+                                        ( Identifier "_strategyIdxs" )
+                                    , IdentifierExpression
+                                        ( Identifier "_data" )
+                                    ]
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "sdlPoolCCIPController" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "distributeRewards" )
+                                    )
+                                )
+                                ( CommaArguments
+                                    [ IdentifierExpression
+                                        ( Identifier "_gasLimits" )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "checkUpkeep"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Calldata
+                            , ident = Nothing
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncMutability View
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        , Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = BinaryExpression Equal
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "priorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "poolStatus" )
+                                            )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                    ( MemberAccess
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "IPriorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "PoolStatus" )
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "CLOSED" )
+                                        )
+                                    )
+                                , trueStmt = Return
+                                    ( Just
+                                        ( TupleExpression
+                                            [ Just
+                                                ( ExpressionLiteral ( BooleanLiteral False ) )
+                                            , Just
+                                                ( ExpressionLiteral
+                                                    ( StringLiteral "0x" )
+                                                )
+                                            ]
+                                        )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ArrayType ( ElementaryType Address ) [ ArrayTypeEmpty ]
+                                    , location = Just Memory
+                                    , ident = Identifier "strategies"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "stakingPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "getStrategies" )
+                                            )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ArrayType ( ElementaryType Bool ) [ ArrayTypeEmpty ]
+                                    , location = Just Memory
+                                    , ident = Identifier "strategiesToUpdate"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( NewType
+                                            ( ArrayType ( ElementaryType Bool ) [ ArrayTypeEmpty ] )
+                                        )
+                                        ( CommaArguments
+                                            [ MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "strategies" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "length" )
+                                                )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "totalStrategiesToUpdate"
+                                    }
+                                ) Nothing
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( SignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "totalDepositChange"
+                                    }
+                                ) Nothing
+                            )
+                        , For
+                            ( ForStatement
+                                { initializer = ForInitializerVariable
+                                    ( VariableDecStatement
+                                        ( VariableDeclaration
+                                            { kind = ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 256 )
+                                                )
+                                            , location = Nothing
+                                            , ident = Identifier "i"
+                                            }
+                                        )
+                                        ( Just
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 0.0 Nothing )
+                                            )
+                                        )
+                                    )
+                                , condition = Just
+                                    ( BinaryExpression LessThan
+                                        ( IdentifierExpression
+                                            ( Identifier "i" )
+                                        )
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "strategies" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                    )
+                                , increment = Just
+                                    ( UnaryExpression UPreInc
+                                        ( IdentifierExpression
+                                            ( Identifier "i" )
+                                        )
+                                    )
+                                , body = BlockStatement
+                                    [ VariableStatement
+                                        ( VariableDecStatement
+                                            ( VariableDeclaration
+                                                { kind = ElementaryType
+                                                    ( SignedInteger
+                                                        ( Just 256 )
+                                                    )
+                                                , location = Nothing
+                                                , ident = Identifier "depositChange"
+                                                }
+                                            )
+                                            ( Just
+                                                ( FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( IdentifierExpression
+                                                                ( Identifier "IStrategy" )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ IndexExpression
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "strategies" )
+                                                                    )
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "i" )
+                                                                    )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "getDepositChange" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments [] )
+                                                )
+                                            )
+                                        )
+                                    , If
+                                        ( IfStatement
+                                            { expr = BinaryExpression LessThan
+                                                ( IdentifierExpression
+                                                    ( Identifier "depositChange" )
+                                                )
+                                                ( ExpressionLiteral
+                                                    ( NumberLiteral 0.0 Nothing )
+                                                )
+                                            , trueStmt = BlockStatement
+                                                [ ExpressionStatement
+                                                    ( BinaryExpression Assign
+                                                        ( IndexExpression
+                                                            ( IdentifierExpression
+                                                                ( Identifier "strategiesToUpdate" )
+                                                            )
+                                                            ( IdentifierExpression
+                                                                ( Identifier "i" )
+                                                            )
+                                                        )
+                                                        ( ExpressionLiteral ( BooleanLiteral True ) )
+                                                    )
+                                                , ExpressionStatement
+                                                    ( UnaryExpression UPostInc
+                                                        ( IdentifierExpression
+                                                            ( Identifier "totalStrategiesToUpdate" )
+                                                        )
+                                                    )
+                                                , ExpressionStatement
+                                                    ( BinaryExpression AssignAdd
+                                                        ( IdentifierExpression
+                                                            ( Identifier "totalDepositChange" )
+                                                        )
+                                                        ( IdentifierExpression
+                                                            ( Identifier "depositChange" )
+                                                        )
+                                                    )
+                                                ]
+                                            , elseStmt = Nothing
+                                            }
+                                        )
+                                    ]
+                                }
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression NotEqual
+                                    ( IdentifierExpression
+                                        ( Identifier "totalStrategiesToUpdate" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 0.0 Nothing )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ VariableStatement
+                                        ( VariableDecStatement
+                                            ( VariableDeclaration
+                                                { kind = ArrayType
+                                                    ( ElementaryType
+                                                        ( UnsignedInteger
+                                                            ( Just 256 )
+                                                        )
+                                                    ) [ ArrayTypeEmpty ]
+                                                , location = Just Memory
+                                                , ident = Identifier "strategyIdxs"
+                                                }
+                                            )
+                                            ( Just
+                                                ( FunctionCall
+                                                    ( NewType
+                                                        ( ArrayType
+                                                            ( ElementaryType
+                                                                ( UnsignedInteger
+                                                                    ( Just 256 )
+                                                                )
+                                                            ) [ ArrayTypeEmpty ]
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "totalStrategiesToUpdate" )
+                                                        ]
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , VariableStatement
+                                        ( VariableDecStatement
+                                            ( VariableDeclaration
+                                                { kind = ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 256 )
+                                                    )
+                                                , location = Nothing
+                                                , ident = Identifier "strategiesAdded"
+                                                }
+                                            ) Nothing
+                                        )
+                                    , For
+                                        ( ForStatement
+                                            { initializer = ForInitializerVariable
+                                                ( VariableDecStatement
+                                                    ( VariableDeclaration
+                                                        { kind = ElementaryType
+                                                            ( UnsignedInteger
+                                                                ( Just 256 )
+                                                            )
+                                                        , location = Nothing
+                                                        , ident = Identifier "i"
+                                                        }
+                                                    )
+                                                    ( Just
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 0.0 Nothing )
+                                                        )
+                                                    )
+                                                )
+                                            , condition = Just
+                                                ( BinaryExpression LessThan
+                                                    ( IdentifierExpression
+                                                        ( Identifier "i" )
+                                                    )
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "strategiesToUpdate" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "length" )
+                                                        )
+                                                    )
+                                                )
+                                            , increment = Just
+                                                ( UnaryExpression UPreInc
+                                                    ( IdentifierExpression
+                                                        ( Identifier "i" )
+                                                    )
+                                                )
+                                            , body = BlockStatement
+                                                [ If
+                                                    ( IfStatement
+                                                        { expr = IndexExpression
+                                                            ( IdentifierExpression
+                                                                ( Identifier "strategiesToUpdate" )
+                                                            )
+                                                            ( IdentifierExpression
+                                                                ( Identifier "i" )
+                                                            )
+                                                        , trueStmt = BlockStatement
+                                                            [ ExpressionStatement
+                                                                ( BinaryExpression Assign
+                                                                    ( IndexExpression
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "strategyIdxs" )
+                                                                        )
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "strategiesAdded" )
+                                                                        )
+                                                                    )
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "i" )
+                                                                    )
+                                                                )
+                                                            , ExpressionStatement
+                                                                ( UnaryExpression UPostInc
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "strategiesAdded" )
+                                                                    )
+                                                                )
+                                                            ]
+                                                        , elseStmt = Nothing
+                                                        }
+                                                    )
+                                                ]
+                                            }
+                                        )
+                                    , Return
+                                        ( Just
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( ExpressionLiteral ( BooleanLiteral True ) )
+                                                , Just
+                                                    ( FunctionCall
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "abi" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "encode" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ IdentifierExpression
+                                                                ( Identifier "strategyIdxs" )
+                                                            , FunctionCall
+                                                                ( TypeExpression
+                                                                    ( ElementaryType
+                                                                        ( UnsignedInteger
+                                                                            ( Just 256 )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( CommaArguments
+                                                                    [ BinaryExpression Mul
+                                                                        ( UnaryExpression UPreSub
+                                                                            ( ExpressionLiteral
+                                                                                ( NumberLiteral 1.0 Nothing )
+                                                                            )
+                                                                        )
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "totalDepositChange" )
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        )
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , Return
+                            ( Just
+                                ( TupleExpression
+                                    [ Just
+                                        ( ExpressionLiteral ( BooleanLiteral False ) )
+                                    , Just
+                                        ( ExpressionLiteral
+                                            ( StringLiteral "0x" )
+                                        )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "performUpkeep"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Calldata
+                            , ident = Just
+                                ( Identifier "_performData" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncModifierInvocation
+                            ( ModifierInvocation
+                                { path = IdentifierPath
+                                    [ Identifier "onlyRebaseBot" ]
+                                , args = Nothing
+                                }
+                            )
+                        ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = BinaryExpression Equal
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "priorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "poolStatus" )
+                                            )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                    ( MemberAccess
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "IPriorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "PoolStatus" )
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "CLOSED" )
+                                        )
+                                    )
+                                , trueStmt = Revert
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "PoolClosed" )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ArrayType
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 256 )
+                                                )
+                                            ) [ ArrayTypeEmpty ]
+                                        , location = Just Memory
+                                        , ident = Identifier "strategiesToUpdate"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 256 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "totalDepositChange"
+                                        }
+                                    )
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "abi" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "decode" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "_performData" )
+                                        , TupleExpression
+                                            [ Just
+                                                ( TypeExpression
+                                                    ( ArrayType
+                                                        ( ElementaryType
+                                                            ( UnsignedInteger
+                                                                ( Just 256 )
+                                                            )
+                                                        ) [ ArrayTypeEmpty ]
+                                                    )
+                                                )
+                                            , Just
+                                                ( TypeExpression
+                                                    ( ElementaryType
+                                                        ( UnsignedInteger
+                                                            ( Just 256 )
+                                                        )
+                                                    )
+                                                )
+                                            ]
+                                        ]
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression Or
+                                    ( BinaryExpression Equal
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "strategiesToUpdate" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    )
+                                    ( BinaryExpression Equal
+                                        ( IdentifierExpression
+                                            ( Identifier "totalDepositChange" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    )
+                                , trueStmt = Revert
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "NoStrategiesToUpdate" )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression GreaterThan
+                                    ( BinaryExpression Div
+                                        ( TupleExpression
+                                            [ Just
+                                                ( BinaryExpression Mul
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 10000.0 Nothing )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "totalDepositChange" )
+                                                    )
+                                                )
+                                            ]
+                                        )
+                                        ( FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "stakingPool" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "totalSupply" )
+                                                )
+                                            )
+                                            ( CommaArguments [] )
+                                        )
+                                    )
+                                    ( IdentifierExpression
+                                        ( Identifier "maxRebaseLossBP" )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ ExpressionStatement
+                                        ( FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "priorityPool" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "setPoolStatus" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ MemberAccess
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "IPriorityPool" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "PoolStatus" )
+                                                        )
+                                                    )
+                                                    ( MemberAccessIdentifier
+                                                        ( Identifier "CLOSED" )
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    , ExpressionStatement
+                                        ( FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "insurancePool" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "initiateClaim" )
+                                                )
+                                            )
+                                            ( CommaArguments [] )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ ExpressionStatement
+                                            ( FunctionCall
+                                                ( MemberAccess
+                                                    ( IdentifierExpression
+                                                        ( Identifier "stakingPool" )
+                                                    )
+                                                    ( MemberAccessIdentifier
+                                                        ( Identifier "updateStrategyRewards" )
+                                                    )
+                                                )
+                                                ( CommaArguments
+                                                    [ IdentifierExpression
+                                                        ( Identifier "strategiesToUpdate" )
+                                                    , ExpressionLiteral
+                                                        ( StringLiteral "" )
+                                                    ]
+                                                )
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "reopenPool"
+                    , params =
+                        [ Parameter
+                            { kind = ArrayType
+                                ( ElementaryType
+                                    ( UnsignedInteger
+                                        ( Just 256 )
+                                    )
+                                ) [ ArrayTypeEmpty ]
+                            , location = Just Calldata
+                            , ident = Just
+                                ( Identifier "_strategyIdxs" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncModifierInvocation
+                            ( ModifierInvocation
+                                { path = IdentifierPath
+                                    [ Identifier "onlyOwner" ]
+                                , args = Nothing
+                                }
+                            )
+                        ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "priorityPool" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "setPoolStatus" )
+                                    )
+                                )
+                                ( CommaArguments
+                                    [ MemberAccess
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "IPriorityPool" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "PoolStatus" )
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "OPEN" )
+                                        )
+                                    ]
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "insurancePool" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "resolveClaim" )
+                                    )
+                                )
+                                ( CommaArguments [] )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "stakingPool" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "updateStrategyRewards" )
+                                    )
+                                )
+                                ( CommaArguments
+                                    [ IdentifierExpression
+                                        ( Identifier "_strategyIdxs" )
+                                    , ExpressionLiteral
+                                        ( StringLiteral "" )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "setRebaseLossBot"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_rebaseBot" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncModifierInvocation
+                            ( ModifierInvocation
+                                { path = IdentifierPath
+                                    [ Identifier "onlyOwner" ]
+                                , args = Nothing
+                                }
+                            )
+                        ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "rebaseBot" )
+                                )
+                                ( IdentifierExpression
+                                    ( Identifier "_rebaseBot" )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "setMaxRebaseLossBP"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "_maxRebaseLossBP" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncModifierInvocation
+                            ( ModifierInvocation
+                                { path = IdentifierPath
+                                    [ Identifier "onlyOwner" ]
+                                , args = Nothing
+                                }
+                            )
+                        ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = BinaryExpression GreaterThan
+                                    ( IdentifierExpression
+                                        ( Identifier "_maxRebaseLossBP" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 9000.0 Nothing )
+                                    )
+                                , trueStmt = Revert
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "InvalidMaxRebaseLoss" )
+                                        )
+                                        ( CommaArguments [] )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "maxRebaseLossBP" )
+                                )
+                                ( IdentifierExpression
+                                    ( Identifier "_maxRebaseLossBP" )
+                                )
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]
