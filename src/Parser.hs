@@ -212,10 +212,10 @@ parseUsingAlias = do
       symbol "*" >> pure (ABinaryOp Mul),
       symbol "-" >> pure (ABinaryOp Sub),
       symbol "==" >> pure (ABinaryOp Equal),
-      symbol ">" >> pure (ABinaryOp GreaterThan),
       symbol ">=" >> pure (ABinaryOp GreaterEqual),
-      symbol "<" >> pure (ABinaryOp LessThan),
+      symbol ">" >> pure (ABinaryOp GreaterThan),
       symbol "<=" >> pure (ABinaryOp LessEqual),
+      symbol "<" >> pure (ABinaryOp LessThan),
       symbol "!=" >> pure (ABinaryOp NotEqual)
      ]
   pure $ UsingDirectiveAlias {ident, op}

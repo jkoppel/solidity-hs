@@ -1,0 +1,1341 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity ^0.8.0" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "IERC20Minimal"
+                , Nothing
+                )
+            ] "../interfaces/external/IERC20Minimal.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "CustomRevert"
+                , Nothing
+                )
+            ] "../libraries/CustomRevert.sol"
+        )
+    )
+, UserDefinedType
+    ( UserDefinedValueDefinition
+        { ident = Identifier "Currency"
+        , kind = Address
+        }
+    )
+, Using
+    ( UsingDirective
+        { binders = UsingDirectiveAliases
+            [ UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "greaterThan" ]
+                , op = Just ( ABinaryOp GreaterThan )
+                }
+            , UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "lessThan" ]
+                , op = Just ( ABinaryOp LessThan )
+                }
+            , UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "greaterThanOrEqualTo" ]
+                , op = Just ( ABinaryOp GreaterEqual )
+                }
+            , UsingDirectiveAlias
+                { ident = IdentifierPath
+                    [ Identifier "equals" ]
+                , op = Just ( ABinaryOp Equal )
+                }
+            ]
+        , bound = DirectiveType
+            ( IdentifierType
+                ( IdentifierPath
+                    [ Identifier "Currency" ]
+                )
+            )
+        , global = True
+        }
+    )
+, Using
+    ( UsingDirective
+        { binders = UsingDirectiveBoundIdent
+            ( IdentifierPath
+                [ Identifier "CurrencyLibrary" ]
+            )
+        , bound = DirectiveType
+            ( IdentifierType
+                ( IdentifierPath
+                    [ Identifier "Currency" ]
+                )
+            )
+        , global = True
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "equals"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "currency" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "other" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = ElementaryType Bool
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ Return
+                ( Just
+                    ( BinaryExpression Equal
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "currency" )
+                                ]
+                            )
+                        )
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "other" )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "greaterThan"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "currency" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "other" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = ElementaryType Bool
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ Return
+                ( Just
+                    ( BinaryExpression GreaterThan
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "currency" )
+                                ]
+                            )
+                        )
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "other" )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "lessThan"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "currency" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "other" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = ElementaryType Bool
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ Return
+                ( Just
+                    ( BinaryExpression LessThan
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "currency" )
+                                ]
+                            )
+                        )
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "other" )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Function
+    ( FunctionDefinition
+        { name = Identifier "greaterThanOrEqualTo"
+        , params =
+            [ Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "currency" )
+                }
+            , Parameter
+                { kind = IdentifierType
+                    ( IdentifierPath
+                        [ Identifier "Currency" ]
+                    )
+                , location = Nothing
+                , ident = Just
+                    ( Identifier "other" )
+                }
+            ]
+        , restrictions = [ FuncMutability Pure ]
+        , returns = Just
+            [ Parameter
+                { kind = ElementaryType Bool
+                , location = Nothing
+                , ident = Nothing
+                }
+            ]
+        , body = BlockStatement
+            [ Return
+                ( Just
+                    ( BinaryExpression GreaterEqual
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "currency" )
+                                ]
+                            )
+                        )
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "unwrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ IdentifierExpression
+                                    ( Identifier "other" )
+                                ]
+                            )
+                        )
+                    )
+                )
+            ]
+        }
+    )
+, Library
+    ( LibraryDefinition
+        { name = Identifier "CurrencyLibrary"
+        , body =
+            [ CUsing
+                ( UsingDirective
+                    { binders = UsingDirectiveBoundIdent
+                        ( IdentifierPath
+                            [ Identifier "CustomRevert" ]
+                        )
+                    , bound = DirectiveType
+                        ( ElementaryType
+                            ( FixedBytes 4 )
+                        )
+                    , global = False
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "Wrap__NativeTransferFailed"
+                    , params =
+                        [
+                            ( ElementaryType Address
+                            , Just
+                                ( Identifier "recipient" )
+                            )
+                        ,
+                            ( ElementaryType Bytes
+                            , Just
+                                ( Identifier "reason" )
+                            )
+                        ]
+                    }
+                )
+            , CError
+                ( ErrorDefinition
+                    { ident = Identifier "Wrap__ERC20TransferFailed"
+                    , params =
+                        [
+                            ( ElementaryType Address
+                            , Just
+                                ( Identifier "token" )
+                            )
+                        ,
+                            ( ElementaryType Bytes
+                            , Just
+                                ( Identifier "reason" )
+                            )
+                        ]
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = IdentifierType
+                        ( IdentifierPath
+                            [ Identifier "Currency" ]
+                        )
+                    , modifiers = Just
+                        [ StatePublic
+                        , StateConstant
+                        ]
+                    , ident = Identifier "ADDRESS_ZERO"
+                    , expr = Just
+                        ( FunctionCall
+                            ( MemberAccess
+                                ( IdentifierExpression
+                                    ( Identifier "Currency" )
+                                )
+                                ( MemberAccessIdentifier
+                                    ( Identifier "wrap" )
+                                )
+                            )
+                            ( CommaArguments
+                                [ FunctionCall
+                                    ( TypeExpression ( ElementaryType Address ) )
+                                    ( CommaArguments
+                                        [ ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "transfer"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "Currency" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "currency" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "to" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "amount" )
+                            }
+                        ]
+                    , restrictions = [ FuncVisibility FuncInternal ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType Bool
+                                    , location = Nothing
+                                    , ident = Identifier "success"
+                                    }
+                                ) Nothing
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = FunctionCall
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "currency" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "isAddressZero" )
+                                        )
+                                    )
+                                    ( CommaArguments [] )
+                                , trueStmt = BlockStatement
+                                    [ Assembly
+                                        ( AssemblyStatement
+                                            { dialect = Nothing
+                                            , flags = [ "memory-safe" ]
+                                            , body =
+                                                [ YulAssignment
+                                                    ( YulAssignmentDeclaration
+                                                        ( YulIdentifierPath
+                                                            [ YulIdentifier
+                                                                ( Identifier "success" )
+                                                            ]
+                                                        )
+                                                        ( YulExpressionFunctionCall
+                                                            ( YulFunctionCallDeclaration
+                                                                { ident = YulEvmBuiltin
+                                                                    ( Identifier "call" )
+                                                                , body =
+                                                                    [ YulExpressionFunctionCall
+                                                                        ( YulFunctionCallDeclaration
+                                                                            { ident = YulEvmBuiltin
+                                                                                ( Identifier "gas" )
+                                                                            , body = []
+                                                                            }
+                                                                        )
+                                                                    , YulExpressionPath
+                                                                        ( YulIdentifierPath
+                                                                            [ YulIdentifier
+                                                                                ( Identifier "to" )
+                                                                            ]
+                                                                        )
+                                                                    , YulExpressionPath
+                                                                        ( YulIdentifierPath
+                                                                            [ YulIdentifier
+                                                                                ( Identifier "amount" )
+                                                                            ]
+                                                                        )
+                                                                    , YulExpressionLiteral
+                                                                        ( YulDecimalNumber 0 )
+                                                                    , YulExpressionLiteral
+                                                                        ( YulDecimalNumber 0 )
+                                                                    , YulExpressionLiteral
+                                                                        ( YulDecimalNumber 0 )
+                                                                    , YulExpressionLiteral
+                                                                        ( YulDecimalNumber 0 )
+                                                                    ]
+                                                                }
+                                                            )
+                                                        )
+                                                    )
+                                                ]
+                                            }
+                                        )
+                                    , If
+                                        ( IfStatement
+                                            { expr = UnaryExpression UPreNot
+                                                ( IdentifierExpression
+                                                    ( Identifier "success" )
+                                                )
+                                            , trueStmt = ExpressionStatement
+                                                ( FunctionCall
+                                                    ( MemberAccess
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "Wrap__NativeTransferFailed" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "selector" )
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "bubbleUpAndRevertWith" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "to" )
+                                                        ]
+                                                    )
+                                                )
+                                            , elseStmt = Nothing
+                                            }
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ Assembly
+                                            ( AssemblyStatement
+                                                { dialect = Nothing
+                                                , flags = [ "memory-safe" ]
+                                                , body =
+                                                    [ YulVariableStatement
+                                                        ( YulVariableDeclaration
+                                                            ( YulIdentifier
+                                                                ( Identifier "fmp" )
+                                                            )
+                                                            ( YulExpressionFunctionCall
+                                                                ( YulFunctionCallDeclaration
+                                                                    { ident = YulEvmBuiltin
+                                                                        ( Identifier "mload" )
+                                                                    , body =
+                                                                        [ YulExpressionLiteral
+                                                                            ( YulHexNumber 64 )
+                                                                        ]
+                                                                    }
+                                                                )
+                                                            )
+                                                        )
+                                                    , YulFunctionCall
+                                                        ( YulFunctionCallDeclaration
+                                                            { ident = YulEvmBuiltin
+                                                                ( Identifier "mstore" )
+                                                            , body =
+                                                                [ YulExpressionPath
+                                                                    ( YulIdentifierPath
+                                                                        [ YulIdentifier
+                                                                            ( Identifier "fmp" )
+                                                                        ]
+                                                                    )
+                                                                , YulExpressionLiteral
+                                                                    ( YulHexNumber 76450787359836037641860180984291677749980919077056822294353438043884394381312 )
+                                                                ]
+                                                            }
+                                                        )
+                                                    , YulFunctionCall
+                                                        ( YulFunctionCallDeclaration
+                                                            { ident = YulEvmBuiltin
+                                                                ( Identifier "mstore" )
+                                                            , body =
+                                                                [ YulExpressionFunctionCall
+                                                                    ( YulFunctionCallDeclaration
+                                                                        { ident = YulEvmBuiltin
+                                                                            ( Identifier "add" )
+                                                                        , body =
+                                                                            [ YulExpressionPath
+                                                                                ( YulIdentifierPath
+                                                                                    [ YulIdentifier
+                                                                                        ( Identifier "fmp" )
+                                                                                    ]
+                                                                                )
+                                                                            , YulExpressionLiteral
+                                                                                ( YulDecimalNumber 4 )
+                                                                            ]
+                                                                        }
+                                                                    )
+                                                                , YulExpressionFunctionCall
+                                                                    ( YulFunctionCallDeclaration
+                                                                        { ident = YulEvmBuiltin
+                                                                            ( Identifier "and" )
+                                                                        , body =
+                                                                            [ YulExpressionPath
+                                                                                ( YulIdentifierPath
+                                                                                    [ YulIdentifier
+                                                                                        ( Identifier "to" )
+                                                                                    ]
+                                                                                )
+                                                                            , YulExpressionLiteral
+                                                                                ( YulHexNumber 1461501637330902918203684832716283019655932542975 )
+                                                                            ]
+                                                                        }
+                                                                    )
+                                                                ]
+                                                            }
+                                                        )
+                                                    , YulFunctionCall
+                                                        ( YulFunctionCallDeclaration
+                                                            { ident = YulEvmBuiltin
+                                                                ( Identifier "mstore" )
+                                                            , body =
+                                                                [ YulExpressionFunctionCall
+                                                                    ( YulFunctionCallDeclaration
+                                                                        { ident = YulEvmBuiltin
+                                                                            ( Identifier "add" )
+                                                                        , body =
+                                                                            [ YulExpressionPath
+                                                                                ( YulIdentifierPath
+                                                                                    [ YulIdentifier
+                                                                                        ( Identifier "fmp" )
+                                                                                    ]
+                                                                                )
+                                                                            , YulExpressionLiteral
+                                                                                ( YulDecimalNumber 36 )
+                                                                            ]
+                                                                        }
+                                                                    )
+                                                                , YulExpressionPath
+                                                                    ( YulIdentifierPath
+                                                                        [ YulIdentifier
+                                                                            ( Identifier "amount" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            }
+                                                        )
+                                                    , YulAssignment
+                                                        ( YulAssignmentDeclaration
+                                                            ( YulIdentifierPath
+                                                                [ YulIdentifier
+                                                                    ( Identifier "success" )
+                                                                ]
+                                                            )
+                                                            ( YulExpressionFunctionCall
+                                                                ( YulFunctionCallDeclaration
+                                                                    { ident = YulEvmBuiltin
+                                                                        ( Identifier "and" )
+                                                                    , body =
+                                                                        [ YulExpressionFunctionCall
+                                                                            ( YulFunctionCallDeclaration
+                                                                                { ident = YulEvmBuiltin
+                                                                                    ( Identifier "or" )
+                                                                                , body =
+                                                                                    [ YulExpressionFunctionCall
+                                                                                        ( YulFunctionCallDeclaration
+                                                                                            { ident = YulEvmBuiltin
+                                                                                                ( Identifier "and" )
+                                                                                            , body =
+                                                                                                [ YulExpressionFunctionCall
+                                                                                                    ( YulFunctionCallDeclaration
+                                                                                                        { ident = YulEvmBuiltin
+                                                                                                            ( Identifier "eq" )
+                                                                                                        , body =
+                                                                                                            [ YulExpressionFunctionCall
+                                                                                                                ( YulFunctionCallDeclaration
+                                                                                                                    { ident = YulEvmBuiltin
+                                                                                                                        ( Identifier "mload" )
+                                                                                                                    , body =
+                                                                                                                        [ YulExpressionLiteral
+                                                                                                                            ( YulDecimalNumber 0 )
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                )
+                                                                                                            , YulExpressionLiteral
+                                                                                                                ( YulDecimalNumber 1 )
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    )
+                                                                                                , YulExpressionFunctionCall
+                                                                                                    ( YulFunctionCallDeclaration
+                                                                                                        { ident = YulEvmBuiltin
+                                                                                                            ( Identifier "gt" )
+                                                                                                        , body =
+                                                                                                            [ YulExpressionFunctionCall
+                                                                                                                ( YulFunctionCallDeclaration
+                                                                                                                    { ident = YulEvmBuiltin
+                                                                                                                        ( Identifier "returndatasize" )
+                                                                                                                    , body = []
+                                                                                                                    }
+                                                                                                                )
+                                                                                                            , YulExpressionLiteral
+                                                                                                                ( YulDecimalNumber 31 )
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    )
+                                                                                                ]
+                                                                                            }
+                                                                                        )
+                                                                                    , YulExpressionFunctionCall
+                                                                                        ( YulFunctionCallDeclaration
+                                                                                            { ident = YulEvmBuiltin
+                                                                                                ( Identifier "iszero" )
+                                                                                            , body =
+                                                                                                [ YulExpressionFunctionCall
+                                                                                                    ( YulFunctionCallDeclaration
+                                                                                                        { ident = YulEvmBuiltin
+                                                                                                            ( Identifier "returndatasize" )
+                                                                                                        , body = []
+                                                                                                        }
+                                                                                                    )
+                                                                                                ]
+                                                                                            }
+                                                                                        )
+                                                                                    ]
+                                                                                }
+                                                                            )
+                                                                        , YulExpressionFunctionCall
+                                                                            ( YulFunctionCallDeclaration
+                                                                                { ident = YulEvmBuiltin
+                                                                                    ( Identifier "call" )
+                                                                                , body =
+                                                                                    [ YulExpressionFunctionCall
+                                                                                        ( YulFunctionCallDeclaration
+                                                                                            { ident = YulEvmBuiltin
+                                                                                                ( Identifier "gas" )
+                                                                                            , body = []
+                                                                                            }
+                                                                                        )
+                                                                                    , YulExpressionPath
+                                                                                        ( YulIdentifierPath
+                                                                                            [ YulIdentifier
+                                                                                                ( Identifier "currency" )
+                                                                                            ]
+                                                                                        )
+                                                                                    , YulExpressionLiteral
+                                                                                        ( YulDecimalNumber 0 )
+                                                                                    , YulExpressionPath
+                                                                                        ( YulIdentifierPath
+                                                                                            [ YulIdentifier
+                                                                                                ( Identifier "fmp" )
+                                                                                            ]
+                                                                                        )
+                                                                                    , YulExpressionLiteral
+                                                                                        ( YulDecimalNumber 68 )
+                                                                                    , YulExpressionLiteral
+                                                                                        ( YulDecimalNumber 0 )
+                                                                                    , YulExpressionLiteral
+                                                                                        ( YulDecimalNumber 32 )
+                                                                                    ]
+                                                                                }
+                                                                            )
+                                                                        ]
+                                                                    }
+                                                                )
+                                                            )
+                                                        )
+                                                    , YulFunctionCall
+                                                        ( YulFunctionCallDeclaration
+                                                            { ident = YulEvmBuiltin
+                                                                ( Identifier "mstore" )
+                                                            , body =
+                                                                [ YulExpressionPath
+                                                                    ( YulIdentifierPath
+                                                                        [ YulIdentifier
+                                                                            ( Identifier "fmp" )
+                                                                        ]
+                                                                    )
+                                                                , YulExpressionLiteral
+                                                                    ( YulDecimalNumber 0 )
+                                                                ]
+                                                            }
+                                                        )
+                                                    , YulFunctionCall
+                                                        ( YulFunctionCallDeclaration
+                                                            { ident = YulEvmBuiltin
+                                                                ( Identifier "mstore" )
+                                                            , body =
+                                                                [ YulExpressionFunctionCall
+                                                                    ( YulFunctionCallDeclaration
+                                                                        { ident = YulEvmBuiltin
+                                                                            ( Identifier "add" )
+                                                                        , body =
+                                                                            [ YulExpressionPath
+                                                                                ( YulIdentifierPath
+                                                                                    [ YulIdentifier
+                                                                                        ( Identifier "fmp" )
+                                                                                    ]
+                                                                                )
+                                                                            , YulExpressionLiteral
+                                                                                ( YulHexNumber 32 )
+                                                                            ]
+                                                                        }
+                                                                    )
+                                                                , YulExpressionLiteral
+                                                                    ( YulDecimalNumber 0 )
+                                                                ]
+                                                            }
+                                                        )
+                                                    , YulFunctionCall
+                                                        ( YulFunctionCallDeclaration
+                                                            { ident = YulEvmBuiltin
+                                                                ( Identifier "mstore" )
+                                                            , body =
+                                                                [ YulExpressionFunctionCall
+                                                                    ( YulFunctionCallDeclaration
+                                                                        { ident = YulEvmBuiltin
+                                                                            ( Identifier "add" )
+                                                                        , body =
+                                                                            [ YulExpressionPath
+                                                                                ( YulIdentifierPath
+                                                                                    [ YulIdentifier
+                                                                                        ( Identifier "fmp" )
+                                                                                    ]
+                                                                                )
+                                                                            , YulExpressionLiteral
+                                                                                ( YulHexNumber 64 )
+                                                                            ]
+                                                                        }
+                                                                    )
+                                                                , YulExpressionLiteral
+                                                                    ( YulDecimalNumber 0 )
+                                                                ]
+                                                            }
+                                                        )
+                                                    ]
+                                                }
+                                            )
+                                        , If
+                                            ( IfStatement
+                                                { expr = UnaryExpression UPreNot
+                                                    ( IdentifierExpression
+                                                        ( Identifier "success" )
+                                                    )
+                                                , trueStmt = ExpressionStatement
+                                                    ( FunctionCall
+                                                        ( MemberAccess
+                                                            ( MemberAccess
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "Wrap__ERC20TransferFailed" )
+                                                                )
+                                                                ( MemberAccessIdentifier
+                                                                    ( Identifier "selector" )
+                                                                )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "bubbleUpAndRevertWith" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ FunctionCall
+                                                                ( MemberAccess
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "Currency" )
+                                                                    )
+                                                                    ( MemberAccessIdentifier
+                                                                        ( Identifier "unwrap" )
+                                                                    )
+                                                                )
+                                                                ( CommaArguments
+                                                                    [ IdentifierExpression
+                                                                        ( Identifier "currency" )
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        )
+                                                    )
+                                                , elseStmt = Nothing
+                                                }
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "balanceOfSelf"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "Currency" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "currency" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability View
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = FunctionCall
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "currency" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "isAddressZero" )
+                                        )
+                                    )
+                                    ( CommaArguments [] )
+                                , trueStmt = BlockStatement
+                                    [ Return
+                                        ( Just
+                                            ( MemberAccess
+                                                ( FunctionCall
+                                                    ( TypeExpression ( ElementaryType Address ) )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "this" )
+                                                        ]
+                                                    )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "balance" )
+                                                )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ Return
+                                            ( Just
+                                                ( FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( IdentifierExpression
+                                                                ( Identifier "IERC20Minimal" )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ FunctionCall
+                                                                    ( MemberAccess
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "Currency" )
+                                                                        )
+                                                                        ( MemberAccessIdentifier
+                                                                            ( Identifier "unwrap" )
+                                                                        )
+                                                                    )
+                                                                    ( CommaArguments
+                                                                        [ IdentifierExpression
+                                                                            ( Identifier "currency" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "balanceOf" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( TypeExpression ( ElementaryType Address ) )
+                                                            ( CommaArguments
+                                                                [ IdentifierExpression
+                                                                    ( Identifier "this" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "balanceOf"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "Currency" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "currency" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "owner" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability View
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = FunctionCall
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "currency" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "isAddressZero" )
+                                        )
+                                    )
+                                    ( CommaArguments [] )
+                                , trueStmt = BlockStatement
+                                    [ Return
+                                        ( Just
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "owner" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "balance" )
+                                                )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ Return
+                                            ( Just
+                                                ( FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( IdentifierExpression
+                                                                ( Identifier "IERC20Minimal" )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ FunctionCall
+                                                                    ( MemberAccess
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "Currency" )
+                                                                        )
+                                                                        ( MemberAccessIdentifier
+                                                                            ( Identifier "unwrap" )
+                                                                        )
+                                                                    )
+                                                                    ( CommaArguments
+                                                                        [ IdentifierExpression
+                                                                            ( Identifier "currency" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "balanceOf" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "owner" )
+                                                        ]
+                                                    )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "isAddressZero"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "Currency" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "currency" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( BinaryExpression Equal
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "Currency" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "unwrap" )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "currency" )
+                                            ]
+                                        )
+                                    )
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "Currency" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "unwrap" )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "ADDRESS_ZERO" )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "toId"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "Currency" ]
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "currency" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( TypeExpression
+                                        ( ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 160 )
+                                            )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "Currency" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "unwrap" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "currency" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "fromId"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "id" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "Currency" ]
+                                )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "Currency" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "wrap" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( TypeExpression ( ElementaryType Address ) )
+                                            ( CommaArguments
+                                                [ FunctionCall
+                                                    ( TypeExpression
+                                                        ( ElementaryType
+                                                            ( UnsignedInteger
+                                                                ( Just 160 )
+                                                            )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "id" )
+                                                        ]
+                                                    )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]
