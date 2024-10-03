@@ -558,7 +558,7 @@ parseYulFunctionDefinition :: Parser YulFunctionDefinitionDeclaration
 parseYulFunctionDefinition = do
   void (keyword "function") <?> "yul function"
   ident <- parseYulIdentifier
-  params <- sepEndBy parseYulIdentifier comma
+  params <- parens (sepEndBy parseYulIdentifier comma)
   returns <- try $ optional (keyword "->" >> sepEndBy parseYulIdentifier comma)
   body <- parseYulBlock
   pure $ YulFunctionDefinitionDeclaration {ident, params, returns, body}
