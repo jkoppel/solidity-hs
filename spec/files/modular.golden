@@ -21,6 +21,7 @@
                                         ( UnsignedInteger
                                             ( Just 256 )
                                         )
+                                    , kindIdentifier = Nothing
                                     }
                                 )
                             , location = Just Storage
@@ -153,6 +154,7 @@
                                 ( UnsignedInteger
                                     ( Just 256 )
                                 )
+                            , kindIdentifier = Nothing
                             }
                         )
                     , modifiers = Just []
@@ -185,8 +187,10 @@
                                         ( UnsignedInteger
                                             ( Just 256 )
                                         )
+                                    , kindIdentifier = Nothing
                                     }
                                 )
+                            , kindIdentifier = Nothing
                             }
                         )
                     , modifiers = Just []

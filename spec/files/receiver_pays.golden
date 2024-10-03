@@ -36,6 +36,7 @@
                                 , mappingKeyIdentifier = Nothing
                                 }
                             , kind = ElementaryType Bool
+                            , kindIdentifier = Nothing
                             }
                         )
                     , modifiers = Just []

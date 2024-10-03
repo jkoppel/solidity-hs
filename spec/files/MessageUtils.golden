@@ -1,0 +1,410 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity ^0.8.20" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Strings"
+                , Nothing
+                )
+            ] "../Strings.sol"
+        )
+    )
+, Library
+    ( LibraryDefinition
+        { name = Identifier "MessageHashUtils"
+        , body =
+            [ CFunction
+                ( FunctionDefinition
+                    { name = Identifier "toEthSignedMessageHash"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "messageHash" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "digest" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Assembly
+                            ( AssemblyStatement
+                                { dialect = Nothing
+                                , flags = []
+                                , body =
+                                    [ YulFunctionCall
+                                        ( YulFunctionCallDeclaration
+                                            { ident = YulEvmBuiltin
+                                                ( Identifier "mstore" )
+                                            , body =
+                                                [ YulExpressionLiteral
+                                                    ( YulHexNumber 0 )
+                                                , YulExpressionLiteral
+                                                    ( YulStringLiteral "ƞthereum Signed Message:
+                                                    32" )
+                                                ]
+                                            }
+                                        )
+                                    , YulFunctionCall
+                                        ( YulFunctionCallDeclaration
+                                            { ident = YulEvmBuiltin
+                                                ( Identifier "mstore" )
+                                            , body =
+                                                [ YulExpressionLiteral
+                                                    ( YulHexNumber 28 )
+                                                , YulExpressionPath
+                                                    ( YulIdentifierPath
+                                                        [ YulIdentifier
+                                                            ( Identifier "messageHash" )
+                                                        ]
+                                                    )
+                                                ]
+                                            }
+                                        )
+                                    , YulAssignment
+                                        ( YulAssignmentDeclaration
+                                            ( YulIdentifierPath
+                                                [ YulIdentifier
+                                                    ( Identifier "digest" )
+                                                ]
+                                            )
+                                            ( YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "keccak256" )
+                                                    , body =
+                                                        [ YulExpressionLiteral
+                                                            ( YulHexNumber 0 )
+                                                        , YulExpressionLiteral
+                                                            ( YulHexNumber 60 )
+                                                        ]
+                                                    }
+                                                )
+                                            )
+                                        )
+                                    ]
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "toEthSignedMessageHash"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "message" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "keccak256" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( TypeExpression ( ElementaryType Bytes ) )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "concat" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( StringLiteral "ƞthereum Signed Message:
+                                                    " )
+                                                , FunctionCall
+                                                    ( TypeExpression ( ElementaryType Bytes ) )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( MemberAccess
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "Strings" )
+                                                                )
+                                                                ( MemberAccessIdentifier
+                                                                    ( Identifier "toString" )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ MemberAccess
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "message" )
+                                                                    )
+                                                                    ( MemberAccessIdentifier
+                                                                        ( Identifier "length" )
+                                                                    )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                , IdentifierExpression
+                                                    ( Identifier "message" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "toDataWithIntendedValidatorHash"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "validator" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Bytes
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "data" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "keccak256" )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( HexStringLiteral "19_00" )
+                                                , IdentifierExpression
+                                                    ( Identifier "validator" )
+                                                , IdentifierExpression
+                                                    ( Identifier "data" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "toTypedDataHash"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "domainSeparator" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "structHash" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 32 )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "digest" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Assembly
+                            ( AssemblyStatement
+                                { dialect = Nothing
+                                , flags = []
+                                , body =
+                                    [ YulVariableStatement
+                                        ( YulVariableDeclaration
+                                            ( YulIdentifier
+                                                ( Identifier "ptr" )
+                                            )
+                                            ( YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "mload" )
+                                                    , body =
+                                                        [ YulExpressionLiteral
+                                                            ( YulHexNumber 64 )
+                                                        ]
+                                                    }
+                                                )
+                                            )
+                                        )
+                                    , YulFunctionCall
+                                        ( YulFunctionCallDeclaration
+                                            { ident = YulEvmBuiltin
+                                                ( Identifier "mstore" )
+                                            , body =
+                                                [ YulExpressionPath
+                                                    ( YulIdentifierPath
+                                                        [ YulIdentifier
+                                                            ( Identifier "ptr" )
+                                                        ]
+                                                    )
+                                                , YulExpressionLiteral
+                                                    ( YulHexString "19_01" )
+                                                ]
+                                            }
+                                        )
+                                    , YulFunctionCall
+                                        ( YulFunctionCallDeclaration
+                                            { ident = YulEvmBuiltin
+                                                ( Identifier "mstore" )
+                                            , body =
+                                                [ YulExpressionFunctionCall
+                                                    ( YulFunctionCallDeclaration
+                                                        { ident = YulEvmBuiltin
+                                                            ( Identifier "add" )
+                                                        , body =
+                                                            [ YulExpressionPath
+                                                                ( YulIdentifierPath
+                                                                    [ YulIdentifier
+                                                                        ( Identifier "ptr" )
+                                                                    ]
+                                                                )
+                                                            , YulExpressionLiteral
+                                                                ( YulHexNumber 2 )
+                                                            ]
+                                                        }
+                                                    )
+                                                , YulExpressionPath
+                                                    ( YulIdentifierPath
+                                                        [ YulIdentifier
+                                                            ( Identifier "domainSeparator" )
+                                                        ]
+                                                    )
+                                                ]
+                                            }
+                                        )
+                                    , YulFunctionCall
+                                        ( YulFunctionCallDeclaration
+                                            { ident = YulEvmBuiltin
+                                                ( Identifier "mstore" )
+                                            , body =
+                                                [ YulExpressionFunctionCall
+                                                    ( YulFunctionCallDeclaration
+                                                        { ident = YulEvmBuiltin
+                                                            ( Identifier "add" )
+                                                        , body =
+                                                            [ YulExpressionPath
+                                                                ( YulIdentifierPath
+                                                                    [ YulIdentifier
+                                                                        ( Identifier "ptr" )
+                                                                    ]
+                                                                )
+                                                            , YulExpressionLiteral
+                                                                ( YulHexNumber 34 )
+                                                            ]
+                                                        }
+                                                    )
+                                                , YulExpressionPath
+                                                    ( YulIdentifierPath
+                                                        [ YulIdentifier
+                                                            ( Identifier "structHash" )
+                                                        ]
+                                                    )
+                                                ]
+                                            }
+                                        )
+                                    , YulAssignment
+                                        ( YulAssignmentDeclaration
+                                            ( YulIdentifierPath
+                                                [ YulIdentifier
+                                                    ( Identifier "digest" )
+                                                ]
+                                            )
+                                            ( YulExpressionFunctionCall
+                                                ( YulFunctionCallDeclaration
+                                                    { ident = YulEvmBuiltin
+                                                        ( Identifier "keccak256" )
+                                                    , body =
+                                                        [ YulExpressionPath
+                                                            ( YulIdentifierPath
+                                                                [ YulIdentifier
+                                                                    ( Identifier "ptr" )
+                                                                ]
+                                                            )
+                                                        , YulExpressionLiteral
+                                                            ( YulHexNumber 66 )
+                                                        ]
+                                                    }
+                                                )
+                                            )
+                                        )
+                                    ]
+                                }
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]

@@ -566,21 +566,21 @@ parseYulFunctionDefinition = do
 parseYulExpression :: Parser YulExpression
 parseYulExpression =
   choice
-    [ YulExpressionPath <$> try (parseYulIdentifierPath <* notFollowedBy "("),
-      YulExpressionFunctionCall <$> parseYulFunctionCall,
-      YulExpressionLiteral <$> parseYulLiteral
+    [ YulExpressionLiteral <$> parseYulLiteral,
+      YulExpressionPath <$> try (parseYulIdentifierPath <* notFollowedBy "("),
+      YulExpressionFunctionCall <$> parseYulFunctionCall
     ]
 
 parseYulLiteral :: Parser YulLiteral
 parseYulLiteral =
   choice
-    [ YulStringLiteral <$> stringLiteral,
+    [ YulHexString . T.pack <$> try (keyword "hex" >> char '"' >> manyTill L.charLiteral (char '"')),
+      YulHexString . T.pack <$> try (keyword "hex" >> char '\'' >> manyTill L.charLiteral (char '\'')),
+      YulStringLiteral <$> stringLiteral,
       YulHexNumber <$> lexeme (chunk "0x" >> L.hexadecimal),
       YulDecimalNumber <$> L.decimal,
       YulBoolean True <$ keyword "true",
-      YulBoolean False <$ keyword "false",
-      YulHexString . T.pack <$> try (keyword "hex" >> char '"' >> manyTill L.charLiteral (char '"')),
-      YulHexString . T.pack <$> try (keyword "hex" >> char '\'' >> manyTill L.charLiteral (char '\''))
+      YulBoolean False <$ keyword "false"
     ]
     <* sc
 

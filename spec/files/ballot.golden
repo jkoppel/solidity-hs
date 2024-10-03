@@ -68,6 +68,7 @@
                                 ( IdentifierPath
                                     [ Identifier "Voter" ]
                                 )
+                            , kindIdentifier = Nothing
                             }
                         )
                     , modifiers = Just [ StatePublic ]

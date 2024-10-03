@@ -49,6 +49,7 @@
                                 , mappingKeyIdentifier = Nothing
                                 }
                             , kind = ElementaryType ( UnsignedInteger Nothing )
+                            , kindIdentifier = Nothing
                             }
                         )
                     , modifiers = Just []

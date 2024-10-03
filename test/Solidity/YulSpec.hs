@@ -49,3 +49,21 @@ spec = describe "Yul function definition" $ do
               ]
           }
     testParse parseYulStatement input `shouldParse` expected
+
+
+  it "parses a Yul hex literal" $ do
+    let input = "hex\"19_01\""
+    let expected = YulHexString "19_01"
+    testParse parseYulLiteral input `shouldParse` expected
+
+  it "parses a Yul function call with hex literal" $ do
+    let input = "mstore(ptr, hex\"19_01\")"
+    let expected = YulFunctionCall
+          (YulFunctionCallDeclaration
+            { ident = YulEvmBuiltin (Identifier "mstore")
+            , body = [ YulExpressionPath (YulIdentifierPath [YulIdentifier (Identifier "ptr")])
+                     , YulExpressionLiteral (YulHexString "19_01")
+                     ]
+            }
+          )
+    testParse parseYulStatement input `shouldParse` expected
