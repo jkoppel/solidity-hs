@@ -762,8 +762,9 @@ parseMappingType = do
   mapping <- parseMappingKey
   void (symbol "=>")
   kind <- parseTypeName
+  kindIdentifier <- optional parseIdentifier
   void (keyword ")")
-  pure $ MappingDefinition {mapping, kind}
+  pure $ MappingDefinition {mapping, kind, kindIdentifier}
   where
     parseMappingKey =
       choice

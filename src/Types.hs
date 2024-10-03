@@ -523,7 +523,7 @@ data MappingKeyType
 data MappingKey = MappingKey { mappingKeyType :: MappingKeyType, mappingKeyIdentifier :: Maybe Identifier }
   deriving stock (Show, Read, Eq, Ord, Generic)
 
-data MappingDefinition = MappingDefinition {mapping :: MappingKey, kind :: TypeName}
+data MappingDefinition = MappingDefinition {mapping :: MappingKey, kind :: TypeName, kindIdentifier :: Maybe Identifier}
   deriving stock (Show, Read, Eq, Ord, Generic)
 
 data FunctionType = MkFunctionType {
