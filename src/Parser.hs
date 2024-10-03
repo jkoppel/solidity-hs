@@ -819,7 +819,7 @@ parseExpression' =
       MetaType <$> try (keyword "type" *> parens parseTypeName),
       NewType <$> try (keyword "new" *> parseTypeName),
       TupleExpression <$> parens (sepEndBy (optional parseExpression) comma),
-      InlineArrayExpression <$> brackets (sepEndBy parseExpression' comma),
+      InlineArrayExpression <$> brackets (sepEndBy parseExpression comma),
       IdentifierExpression <$> try (parseIdentifier <* notFollowedBy (symbol "[" >> symbol "]")),
       ExpressionLiteral <$> parseLiteral,
       TypeExpression <$> parseTypeName

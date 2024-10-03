@@ -1,0 +1,634 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity ^0.8.20" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Test"
+                , Nothing
+                )
+            ] "forge-std/Test.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "IHooks"
+                , Nothing
+                )
+            ] "../src/interfaces/IHooks.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Hooks"
+                , Nothing
+                )
+            ] "../src/libraries/Hooks.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "IPoolManager"
+                , Nothing
+                )
+            ] "../src/interfaces/IPoolManager.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "IProtocolFees"
+                , Nothing
+                )
+            ] "../src/interfaces/IProtocolFees.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "IProtocolFeeController"
+                , Nothing
+                )
+            ] "../src/interfaces/IProtocolFeeController.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "PoolManager"
+                , Nothing
+                )
+            ] "../src/PoolManager.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "TickMath"
+                , Nothing
+                )
+            ] "../src/libraries/TickMath.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Pool"
+                , Nothing
+                )
+            ] "../src/libraries/Pool.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Deployers"
+                , Nothing
+                )
+            ] "./utils/Deployers.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Currency"
+                , Nothing
+                )
+            ,
+                ( Identifier "CurrencyLibrary"
+                , Nothing
+                )
+            ] "../src/types/Currency.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "MockHooks"
+                , Nothing
+                )
+            ] "../src/test/MockHooks.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "MockContract"
+                , Nothing
+                )
+            ] "../src/test/MockContract.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "EmptyTestHooks"
+                , Nothing
+                )
+            ] "../src/test/EmptyTestHooks.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "PoolKey"
+                , Nothing
+                )
+            ] "../src/types/PoolKey.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "PoolModifyLiquidityTest"
+                , Nothing
+                )
+            ] "../src/test/PoolModifyLiquidityTest.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "BalanceDelta"
+                , Nothing
+                )
+            ,
+                ( Identifier "BalanceDeltaLibrary"
+                , Nothing
+                )
+            ] "../src/types/BalanceDelta.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "PoolSwapTest"
+                , Nothing
+                )
+            ] "../src/test/PoolSwapTest.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "TestInvalidERC20"
+                , Nothing
+                )
+            ] "../src/test/TestInvalidERC20.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "GasSnapshot"
+                , Nothing
+                )
+            ] "forge-gas-snapshot/GasSnapshot.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "PoolEmptyUnlockTest"
+                , Nothing
+                )
+            ] "../src/test/PoolEmptyUnlockTest.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Action"
+                , Nothing
+                )
+            ] "../src/test/PoolNestedActionsTest.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "PoolId"
+                , Nothing
+                )
+            ] "../src/types/PoolId.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "LPFeeLibrary"
+                , Nothing
+                )
+            ] "../src/libraries/LPFeeLibrary.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Position"
+                , Nothing
+                )
+            ] "../src/libraries/Position.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Constants"
+                , Nothing
+                )
+            ] "./utils/Constants.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "SafeCast"
+                , Nothing
+                )
+            ] "../src/libraries/SafeCast.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "AmountHelpers"
+                , Nothing
+                )
+            ] "./utils/AmountHelpers.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "ProtocolFeeLibrary"
+                , Nothing
+                )
+            ] "../src/libraries/ProtocolFeeLibrary.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "IProtocolFees"
+                , Nothing
+                )
+            ] "../src/interfaces/IProtocolFees.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "StateLibrary"
+                , Nothing
+                )
+            ] "../src/libraries/StateLibrary.sol"
+        )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportAliases
+            [
+                ( Identifier "Actions"
+                , Nothing
+                )
+            ] "../src/test/ActionsRouter.sol"
+        )
+    )
+, Contract
+    ( ContractDefinition
+        { abstract = False
+        , name = Identifier "PoolManagerTest"
+        , inheritance = Just
+            [ InheritanceSpecifier
+                ( IdentifierPath
+                    [ Identifier "Test" ]
+                ) Nothing
+            , InheritanceSpecifier
+                ( IdentifierPath
+                    [ Identifier "Deployers" ]
+                ) Nothing
+            , InheritanceSpecifier
+                ( IdentifierPath
+                    [ Identifier "GasSnapshot" ]
+                ) Nothing
+            ]
+        , body =
+            [ CStateVariableDec
+                ( StateVariableDec
+                    { kind = ArrayType
+                        ( IdentifierType
+                            ( IdentifierPath
+                                [ Identifier "Action" ]
+                            )
+                        ) [ ArrayTypeEmpty ]
+                    , modifiers = Just []
+                    , ident = Identifier "_actions"
+                    , expr = Nothing
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "test_unlock_cannotBeCalledTwiceByCaller"
+                    , params = []
+                    , restrictions = [ FuncVisibility FuncPublic ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "_actions" )
+                                )
+                                ( InlineArrayExpression
+                                    [ MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "Action" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "NESTED_SELF_UNLOCK" )
+                                        )
+                                    ]
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "nestedActionRouter" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "unlock" )
+                                    )
+                                )
+                                ( CommaArguments
+                                    [ FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "abi" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "encode" )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "_actions" )
+                                            ]
+                                        )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "test_unlock_cannotBeCalledTwiceByDifferentCallers"
+                    , params = []
+                    , restrictions = [ FuncVisibility FuncPublic ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "_actions" )
+                                )
+                                ( InlineArrayExpression
+                                    [ MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "Action" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "NESTED_EXECUTOR_UNLOCK" )
+                                        )
+                                    ]
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( MemberAccess
+                                    ( IdentifierExpression
+                                        ( Identifier "nestedActionRouter" )
+                                    )
+                                    ( MemberAccessIdentifier
+                                        ( Identifier "unlock" )
+                                    )
+                                )
+                                ( CommaArguments
+                                    [ FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "abi" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "encode" )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "_actions" )
+                                            ]
+                                        )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "test_getPosition"
+                    , params = []
+                    , restrictions =
+                        [ FuncVisibility FuncPublic
+                        , FuncMutability View
+                        ]
+                    , returns = Nothing
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 128 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "liquidity"
+                                        }
+                                    )
+                                , Nothing
+                                , Nothing
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( IdentifierExpression
+                                            ( Identifier "manager" )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "getPositionInfo" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "key" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "toId" )
+                                                )
+                                            )
+                                            ( CommaArguments [] )
+                                        , FunctionCall
+                                            ( TypeExpression ( ElementaryType Address ) )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "modifyLiquidityRouter" )
+                                                ]
+                                            )
+                                        , UnaryExpression UPreSub
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 120.0 Nothing )
+                                            )
+                                        , ExpressionLiteral
+                                            ( NumberLiteral 120.0 Nothing )
+                                        , ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "assert" )
+                                )
+                                ( CommaArguments
+                                    [ BinaryExpression GreaterThan
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "LIQUIDITY_PARAMS" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "liquidityDelta" )
+                                            )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    ]
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "assertEq" )
+                                )
+                                ( CommaArguments
+                                    [ IdentifierExpression
+                                        ( Identifier "liquidity" )
+                                    , FunctionCall
+                                        ( TypeExpression
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 128 )
+                                                )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ FunctionCall
+                                                ( TypeExpression
+                                                    ( ElementaryType
+                                                        ( UnsignedInteger
+                                                            ( Just 256 )
+                                                        )
+                                                    )
+                                                )
+                                                ( CommaArguments
+                                                    [ MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "LIQUIDITY_PARAMS" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "liquidityDelta" )
+                                                        )
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "supportsInterface"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( FixedBytes 4 )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncExternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( ExpressionLiteral ( BooleanLiteral True ) )
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]
