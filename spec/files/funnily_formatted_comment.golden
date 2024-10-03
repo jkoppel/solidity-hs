@@ -1,0 +1,9 @@
+[ Contract
+    ( ContractDefinition
+        { abstract = True
+        , name = Identifier "StdUtils"
+        , inheritance = Nothing
+        , body = []
+        }
+    )
+]

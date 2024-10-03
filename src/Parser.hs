@@ -35,7 +35,7 @@ instance ShowErrorComponent ParserError where
 type Parser = Parsec ParserError Text
 
 sc :: Parser ()
-sc = L.space space1 (L.skipLineComment "//") (L.skipBlockCommentNested "/*" "*/")
+sc = L.space space1 (L.skipLineComment "//") (L.skipBlockComment "/*" "*/")
 
 lexeme :: Parser a -> Parser a
 lexeme = L.lexeme sc
