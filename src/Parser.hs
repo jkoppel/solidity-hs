@@ -934,7 +934,7 @@ parseTable =
     ],
     [binary "&&" (BinaryExpression And)],
     [binary "||" (BinaryExpression Or)],
-    [TernR (ConditionalExpression <$ symbol ":" <$ symbol "?")],
+    [ Postfix parseTernary ],
     [ binaryR "=" (BinaryExpression Assign),
       binaryR "|=" (BinaryExpression AssignBitOr),
       binaryR "^=" (BinaryExpression AssignBitXor),
@@ -949,6 +949,16 @@ parseTable =
       binaryR "%=" (BinaryExpression AssignMod)
     ]
   ]
+
+-- This exists so statements like `a < b ? x = 1 : x = 2;` are parsed correctly, even though
+-- assignment is lower precedence than the ternary operator, and so `x = a < b ? 1 : 2;`
+parseTernary :: Parser (Expression -> Expression)
+parseTernary = do
+    void $ symbol "?"
+    trueExpr <- parseExpression
+    void $ symbol ":"
+    falseExpr <- parseExpression
+    return $ \condition -> ConditionalExpression condition trueExpr falseExpr
 
 parseSolidity :: Parser Solidity
 parseSolidity = sc *> (Solidity <$> syntax) <* eof

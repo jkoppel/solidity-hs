@@ -1,0 +1,1930 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity >=0.5.0 <0.8.0" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "src/core/libraries/FullMath.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "src/core/libraries/TickMath.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "src/core/interfaces/IKatanaV3Pool.sol" Nothing )
+    )
+, Library
+    ( LibraryDefinition
+        { name = Identifier "OracleLibrary"
+        , body =
+            [ CFunction
+                ( FunctionDefinition
+                    { name = Identifier "consult"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "pool" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 32 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "secondsAgo" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability View
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "arithmeticMeanTick" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 128 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "harmonicMeanLiquidity" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "require" )
+                                )
+                                ( CommaArguments
+                                    [ BinaryExpression NotEqual
+                                        ( IdentifierExpression
+                                            ( Identifier "secondsAgo" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    , ExpressionLiteral
+                                        ( StringLiteral "BP" )
+                                    ]
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ArrayType
+                                        ( ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 32 )
+                                            )
+                                        ) [ ArrayTypeEmpty ]
+                                    , location = Just Memory
+                                    , ident = Identifier "secondsAgos"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( NewType
+                                            ( ArrayType
+                                                ( ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 32 )
+                                                    )
+                                                ) [ ArrayTypeEmpty ]
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ ExpressionLiteral
+                                                ( NumberLiteral 2.0 Nothing )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IndexExpression
+                                    ( IdentifierExpression
+                                        ( Identifier "secondsAgos" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 0.0 Nothing )
+                                    )
+                                )
+                                ( IdentifierExpression
+                                    ( Identifier "secondsAgo" )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IndexExpression
+                                    ( IdentifierExpression
+                                        ( Identifier "secondsAgos" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 1.0 Nothing )
+                                    )
+                                )
+                                ( ExpressionLiteral
+                                    ( NumberLiteral 0.0 Nothing )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ArrayType
+                                            ( ElementaryType
+                                                ( SignedInteger
+                                                    ( Just 56 )
+                                                )
+                                            ) [ ArrayTypeEmpty ]
+                                        , location = Just Memory
+                                        , ident = Identifier "tickCumulatives"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ArrayType
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 160 )
+                                                )
+                                            ) [ ArrayTypeEmpty ]
+                                        , location = Just Memory
+                                        , ident = Identifier "secondsPerLiquidityCumulativeX128s"
+                                        }
+                                    )
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( FunctionCall
+                                            ( IdentifierExpression
+                                                ( Identifier "IKatanaV3Pool" )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "pool" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "observe" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "secondsAgos" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( SignedInteger
+                                            ( Just 56 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "tickCumulativesDelta"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Sub
+                                        ( IndexExpression
+                                            ( IdentifierExpression
+                                                ( Identifier "tickCumulatives" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 1.0 Nothing )
+                                            )
+                                        )
+                                        ( IndexExpression
+                                            ( IdentifierExpression
+                                                ( Identifier "tickCumulatives" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 0.0 Nothing )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 160 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "secondsPerLiquidityCumulativesDelta"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Sub
+                                        ( IndexExpression
+                                            ( IdentifierExpression
+                                                ( Identifier "secondsPerLiquidityCumulativeX128s" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 1.0 Nothing )
+                                            )
+                                        )
+                                        ( IndexExpression
+                                            ( IdentifierExpression
+                                                ( Identifier "secondsPerLiquidityCumulativeX128s" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 0.0 Nothing )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "arithmeticMeanTick" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression
+                                        ( ElementaryType
+                                            ( SignedInteger
+                                                ( Just 24 )
+                                            )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ BinaryExpression Div
+                                            ( IdentifierExpression
+                                                ( Identifier "tickCumulativesDelta" )
+                                            )
+                                            ( IdentifierExpression
+                                                ( Identifier "secondsAgo" )
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression And
+                                    ( BinaryExpression LessThan
+                                        ( IdentifierExpression
+                                            ( Identifier "tickCumulativesDelta" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    )
+                                    ( TupleExpression
+                                        [ Just
+                                            ( BinaryExpression NotEqual
+                                                ( BinaryExpression Mod
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tickCumulativesDelta" )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "secondsAgo" )
+                                                    )
+                                                )
+                                                ( ExpressionLiteral
+                                                    ( NumberLiteral 0.0 Nothing )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                , trueStmt = ExpressionStatement
+                                    ( UnaryExpression UPreInc
+                                        ( IdentifierExpression
+                                            ( Identifier "arithmeticMeanTick" )
+                                        )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 192 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "secondsAgoX160"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Mul
+                                        ( FunctionCall
+                                            ( TypeExpression
+                                                ( ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 192 )
+                                                    )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "secondsAgo" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccess
+                                            ( MetaType
+                                                ( ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 160 )
+                                                    )
+                                                )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "max" )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "harmonicMeanLiquidity" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression
+                                        ( ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 128 )
+                                            )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ BinaryExpression Div
+                                            ( IdentifierExpression
+                                                ( Identifier "secondsAgoX160" )
+                                            )
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( BinaryExpression Shl
+                                                        ( FunctionCall
+                                                            ( TypeExpression
+                                                                ( ElementaryType
+                                                                    ( UnsignedInteger
+                                                                        ( Just 192 )
+                                                                    )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ IdentifierExpression
+                                                                    ( Identifier "secondsPerLiquidityCumulativesDelta" )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 32.0 Nothing )
+                                                        )
+                                                    )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "getQuoteAtTick"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tick" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 128 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "baseAmount" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "baseToken" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "quoteToken" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "quoteAmount" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 160 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "sqrtRatioX96"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "TickMath" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "getSqrtRatioAtTick" )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "tick" )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression LessEqual
+                                    ( IdentifierExpression
+                                        ( Identifier "sqrtRatioX96" )
+                                    )
+                                    ( MemberAccess
+                                        ( MetaType
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 128 )
+                                                )
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "max" )
+                                        )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ VariableStatement
+                                        ( VariableDecStatement
+                                            ( VariableDeclaration
+                                                { kind = ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 256 )
+                                                    )
+                                                , location = Nothing
+                                                , ident = Identifier "ratioX192"
+                                                }
+                                            )
+                                            ( Just
+                                                ( BinaryExpression Mul
+                                                    ( FunctionCall
+                                                        ( TypeExpression
+                                                            ( ElementaryType
+                                                                ( UnsignedInteger
+                                                                    ( Just 256 )
+                                                                )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ IdentifierExpression
+                                                                ( Identifier "sqrtRatioX96" )
+                                                            ]
+                                                        )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "sqrtRatioX96" )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IdentifierExpression
+                                                ( Identifier "quoteAmount" )
+                                            )
+                                            ( ConditionalExpression
+                                                ( BinaryExpression LessThan
+                                                    ( IdentifierExpression
+                                                        ( Identifier "baseToken" )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "quoteToken" )
+                                                    )
+                                                )
+                                                ( FunctionCall
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "FullMath" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "mulDiv" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "ratioX192" )
+                                                        , IdentifierExpression
+                                                            ( Identifier "baseAmount" )
+                                                        , BinaryExpression Shl
+                                                            ( ExpressionLiteral
+                                                                ( NumberLiteral 1.0 Nothing )
+                                                            )
+                                                            ( ExpressionLiteral
+                                                                ( NumberLiteral 192.0 Nothing )
+                                                            )
+                                                        ]
+                                                    )
+                                                )
+                                                ( FunctionCall
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "FullMath" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "mulDiv" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ BinaryExpression Shl
+                                                            ( ExpressionLiteral
+                                                                ( NumberLiteral 1.0 Nothing )
+                                                            )
+                                                            ( ExpressionLiteral
+                                                                ( NumberLiteral 192.0 Nothing )
+                                                            )
+                                                        , IdentifierExpression
+                                                            ( Identifier "baseAmount" )
+                                                        , IdentifierExpression
+                                                            ( Identifier "ratioX192" )
+                                                        ]
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ VariableStatement
+                                            ( VariableDecStatement
+                                                ( VariableDeclaration
+                                                    { kind = ElementaryType
+                                                        ( UnsignedInteger
+                                                            ( Just 256 )
+                                                        )
+                                                    , location = Nothing
+                                                    , ident = Identifier "ratioX128"
+                                                    }
+                                                )
+                                                ( Just
+                                                    ( FunctionCall
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "FullMath" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "mulDiv" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ IdentifierExpression
+                                                                ( Identifier "sqrtRatioX96" )
+                                                            , IdentifierExpression
+                                                                ( Identifier "sqrtRatioX96" )
+                                                            , BinaryExpression Shl
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 1.0 Nothing )
+                                                                )
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 64.0 Nothing )
+                                                                )
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        , ExpressionStatement
+                                            ( BinaryExpression Assign
+                                                ( IdentifierExpression
+                                                    ( Identifier "quoteAmount" )
+                                                )
+                                                ( ConditionalExpression
+                                                    ( BinaryExpression LessThan
+                                                        ( IdentifierExpression
+                                                            ( Identifier "baseToken" )
+                                                        )
+                                                        ( IdentifierExpression
+                                                            ( Identifier "quoteToken" )
+                                                        )
+                                                    )
+                                                    ( FunctionCall
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "FullMath" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "mulDiv" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ IdentifierExpression
+                                                                ( Identifier "ratioX128" )
+                                                            , IdentifierExpression
+                                                                ( Identifier "baseAmount" )
+                                                            , BinaryExpression Shl
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 1.0 Nothing )
+                                                                )
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 128.0 Nothing )
+                                                                )
+                                                            ]
+                                                        )
+                                                    )
+                                                    ( FunctionCall
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "FullMath" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "mulDiv" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ BinaryExpression Shl
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 1.0 Nothing )
+                                                                )
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 128.0 Nothing )
+                                                                )
+                                                            , IdentifierExpression
+                                                                ( Identifier "baseAmount" )
+                                                            , IdentifierExpression
+                                                                ( Identifier "ratioX128" )
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "getOldestObservationSecondsAgo"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "pool" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability View
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 32 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "secondsAgo" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Nothing
+                                , Nothing
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 16 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "observationIndex"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 16 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "observationCardinality"
+                                        }
+                                    )
+                                , Nothing
+                                , Nothing
+                                , Nothing
+                                , Nothing
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( FunctionCall
+                                            ( IdentifierExpression
+                                                ( Identifier "IKatanaV3Pool" )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "pool" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "slot0" )
+                                        )
+                                    )
+                                    ( CommaArguments [] )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "require" )
+                                )
+                                ( CommaArguments
+                                    [ BinaryExpression GreaterThan
+                                        ( IdentifierExpression
+                                            ( Identifier "observationCardinality" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    , ExpressionLiteral
+                                        ( StringLiteral "NI" )
+                                    ]
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 32 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "observationTimestamp"
+                                        }
+                                    )
+                                , Nothing
+                                , Nothing
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType Bool
+                                        , location = Nothing
+                                        , ident = Identifier "initialized"
+                                        }
+                                    )
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( FunctionCall
+                                            ( IdentifierExpression
+                                                ( Identifier "IKatanaV3Pool" )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "pool" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "observations" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ BinaryExpression Mod
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( BinaryExpression Add
+                                                        ( IdentifierExpression
+                                                            ( Identifier "observationIndex" )
+                                                        )
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 1.0 Nothing )
+                                                        )
+                                                    )
+                                                ]
+                                            )
+                                            ( IdentifierExpression
+                                                ( Identifier "observationCardinality" )
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = UnaryExpression UPreNot
+                                    ( IdentifierExpression
+                                        ( Identifier "initialized" )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( IdentifierExpression
+                                                        ( Identifier "observationTimestamp" )
+                                                    )
+                                                , Nothing
+                                                , Nothing
+                                                , Nothing
+                                                ]
+                                            )
+                                            ( FunctionCall
+                                                ( MemberAccess
+                                                    ( FunctionCall
+                                                        ( IdentifierExpression
+                                                            ( Identifier "IKatanaV3Pool" )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ IdentifierExpression
+                                                                ( Identifier "pool" )
+                                                            ]
+                                                        )
+                                                    )
+                                                    ( MemberAccessIdentifier
+                                                        ( Identifier "observations" )
+                                                    )
+                                                )
+                                                ( CommaArguments
+                                                    [ ExpressionLiteral
+                                                        ( NumberLiteral 0.0 Nothing )
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "secondsAgo" )
+                                )
+                                ( BinaryExpression Sub
+                                    ( FunctionCall
+                                        ( TypeExpression
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 32 )
+                                                )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "block" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "timestamp" )
+                                                )
+                                            ]
+                                        )
+                                    )
+                                    ( IdentifierExpression
+                                        ( Identifier "observationTimestamp" )
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "getBlockStartingTickAndLiquidity"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "pool" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability View
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 128 )
+                                )
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Nothing
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( SignedInteger
+                                                ( Just 24 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "tick"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 16 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "observationIndex"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 16 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "observationCardinality"
+                                        }
+                                    )
+                                , Nothing
+                                , Nothing
+                                , Nothing
+                                , Nothing
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( FunctionCall
+                                            ( IdentifierExpression
+                                                ( Identifier "IKatanaV3Pool" )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "pool" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "slot0" )
+                                        )
+                                    )
+                                    ( CommaArguments [] )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "require" )
+                                )
+                                ( CommaArguments
+                                    [ BinaryExpression GreaterThan
+                                        ( IdentifierExpression
+                                            ( Identifier "observationCardinality" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 1.0 Nothing )
+                                        )
+                                    , ExpressionLiteral
+                                        ( StringLiteral "NEO" )
+                                    ]
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 32 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "observationTimestamp"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( SignedInteger
+                                                ( Just 56 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "tickCumulative"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 160 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "secondsPerLiquidityCumulativeX128"
+                                        }
+                                    )
+                                , Nothing
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( FunctionCall
+                                            ( IdentifierExpression
+                                                ( Identifier "IKatanaV3Pool" )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "pool" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "observations" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "observationIndex" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression NotEqual
+                                    ( IdentifierExpression
+                                        ( Identifier "observationTimestamp" )
+                                    )
+                                    ( FunctionCall
+                                        ( TypeExpression
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 32 )
+                                                )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "block" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "timestamp" )
+                                                )
+                                            ]
+                                        )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ Return
+                                        ( Just
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tick" )
+                                                    )
+                                                , Just
+                                                    ( FunctionCall
+                                                        ( MemberAccess
+                                                            ( FunctionCall
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "IKatanaV3Pool" )
+                                                                )
+                                                                ( CommaArguments
+                                                                    [ IdentifierExpression
+                                                                        ( Identifier "pool" )
+                                                                    ]
+                                                                )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "liquidity" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments [] )
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "prevIndex"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Mod
+                                        ( TupleExpression
+                                            [ Just
+                                                ( BinaryExpression Sub
+                                                    ( BinaryExpression Add
+                                                        ( FunctionCall
+                                                            ( TypeExpression
+                                                                ( ElementaryType
+                                                                    ( UnsignedInteger
+                                                                        ( Just 256 )
+                                                                    )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ IdentifierExpression
+                                                                    ( Identifier "observationIndex" )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( IdentifierExpression
+                                                            ( Identifier "observationCardinality" )
+                                                        )
+                                                    )
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 1.0 Nothing )
+                                                    )
+                                                )
+                                            ]
+                                        )
+                                        ( IdentifierExpression
+                                            ( Identifier "observationCardinality" )
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 32 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "prevObservationTimestamp"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( SignedInteger
+                                                ( Just 56 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "prevTickCumulative"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType
+                                            ( UnsignedInteger
+                                                ( Just 160 )
+                                            )
+                                        , location = Nothing
+                                        , ident = Identifier "prevSecondsPerLiquidityCumulativeX128"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType Bool
+                                        , location = Nothing
+                                        , ident = Identifier "prevInitialized"
+                                        }
+                                    )
+                                ]
+                                ( FunctionCall
+                                    ( MemberAccess
+                                        ( FunctionCall
+                                            ( IdentifierExpression
+                                                ( Identifier "IKatanaV3Pool" )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "pool" )
+                                                ]
+                                            )
+                                        )
+                                        ( MemberAccessIdentifier
+                                            ( Identifier "observations" )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "prevIndex" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "require" )
+                                )
+                                ( CommaArguments
+                                    [ IdentifierExpression
+                                        ( Identifier "prevInitialized" )
+                                    , ExpressionLiteral
+                                        ( StringLiteral "ONI" )
+                                    ]
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 32 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "delta"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Sub
+                                        ( IdentifierExpression
+                                            ( Identifier "observationTimestamp" )
+                                        )
+                                        ( IdentifierExpression
+                                            ( Identifier "prevObservationTimestamp" )
+                                        )
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "tick" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression
+                                        ( ElementaryType
+                                            ( SignedInteger
+                                                ( Just 24 )
+                                            )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ BinaryExpression Div
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( BinaryExpression Sub
+                                                        ( IdentifierExpression
+                                                            ( Identifier "tickCumulative" )
+                                                        )
+                                                        ( IdentifierExpression
+                                                            ( Identifier "prevTickCumulative" )
+                                                        )
+                                                    )
+                                                ]
+                                            )
+                                            ( IdentifierExpression
+                                                ( Identifier "delta" )
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 128 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "liquidity"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( TypeExpression
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 128 )
+                                                )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ BinaryExpression Div
+                                                ( TupleExpression
+                                                    [ Just
+                                                        ( BinaryExpression Mul
+                                                            ( FunctionCall
+                                                                ( TypeExpression
+                                                                    ( ElementaryType
+                                                                        ( UnsignedInteger
+                                                                            ( Just 192 )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( CommaArguments
+                                                                    [ IdentifierExpression
+                                                                        ( Identifier "delta" )
+                                                                    ]
+                                                                )
+                                                            )
+                                                            ( MemberAccess
+                                                                ( MetaType
+                                                                    ( ElementaryType
+                                                                        ( UnsignedInteger
+                                                                            ( Just 160 )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( MemberAccessIdentifier
+                                                                    ( Identifier "max" )
+                                                                )
+                                                            )
+                                                        )
+                                                    ]
+                                                )
+                                                ( TupleExpression
+                                                    [ Just
+                                                        ( BinaryExpression Shl
+                                                            ( FunctionCall
+                                                                ( TypeExpression
+                                                                    ( ElementaryType
+                                                                        ( UnsignedInteger
+                                                                            ( Just 192 )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( CommaArguments
+                                                                    [ BinaryExpression Sub
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "secondsPerLiquidityCumulativeX128" )
+                                                                        )
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "prevSecondsPerLiquidityCumulativeX128" )
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            )
+                                                            ( ExpressionLiteral
+                                                                ( NumberLiteral 32.0 Nothing )
+                                                            )
+                                                        )
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , Return
+                            ( Just
+                                ( TupleExpression
+                                    [ Just
+                                        ( IdentifierExpression
+                                            ( Identifier "tick" )
+                                        )
+                                    , Just
+                                        ( IdentifierExpression
+                                            ( Identifier "liquidity" )
+                                        )
+                                    ]
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CStruct
+                ( StructDefinition
+                    { ident = Identifier "WeightedTickData"
+                    , members =
+                        [
+                            ( ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , Identifier "tick"
+                            )
+                        ,
+                            ( ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 128 )
+                                )
+                            , Identifier "weight"
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "getWeightedArithmeticMeanTick"
+                    , params =
+                        [ Parameter
+                            { kind = ArrayType
+                                ( IdentifierType
+                                    ( IdentifierPath
+                                        [ Identifier "WeightedTickData" ]
+                                    )
+                                ) [ ArrayTypeEmpty ]
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "weightedTickData" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "weightedArithmeticMeanTick" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( SignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "numerator"
+                                    }
+                                ) Nothing
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "denominator"
+                                    }
+                                ) Nothing
+                            )
+                        , For
+                            ( ForStatement
+                                { initializer = ForInitializerVariable
+                                    ( VariableDecStatement
+                                        ( VariableDeclaration
+                                            { kind = ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 256 )
+                                                )
+                                            , location = Nothing
+                                            , ident = Identifier "i"
+                                            }
+                                        ) Nothing
+                                    )
+                                , condition = Just
+                                    ( BinaryExpression LessThan
+                                        ( IdentifierExpression
+                                            ( Identifier "i" )
+                                        )
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "weightedTickData" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                    )
+                                , increment = Just
+                                    ( UnaryExpression UPostInc
+                                        ( IdentifierExpression
+                                            ( Identifier "i" )
+                                        )
+                                    )
+                                , body = BlockStatement
+                                    [ ExpressionStatement
+                                        ( BinaryExpression AssignAdd
+                                            ( IdentifierExpression
+                                                ( Identifier "numerator" )
+                                            )
+                                            ( BinaryExpression Mul
+                                                ( MemberAccess
+                                                    ( IndexExpression
+                                                        ( IdentifierExpression
+                                                            ( Identifier "weightedTickData" )
+                                                        )
+                                                        ( IdentifierExpression
+                                                            ( Identifier "i" )
+                                                        )
+                                                    )
+                                                    ( MemberAccessIdentifier
+                                                        ( Identifier "tick" )
+                                                    )
+                                                )
+                                                ( FunctionCall
+                                                    ( TypeExpression
+                                                        ( ElementaryType
+                                                            ( SignedInteger
+                                                                ( Just 256 )
+                                                            )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ MemberAccess
+                                                            ( IndexExpression
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "weightedTickData" )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "i" )
+                                                                )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "weight" )
+                                                            )
+                                                        ]
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , ExpressionStatement
+                                        ( BinaryExpression AssignAdd
+                                            ( IdentifierExpression
+                                                ( Identifier "denominator" )
+                                            )
+                                            ( MemberAccess
+                                                ( IndexExpression
+                                                    ( IdentifierExpression
+                                                        ( Identifier "weightedTickData" )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "i" )
+                                                    )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "weight" )
+                                                )
+                                            )
+                                        )
+                                    ]
+                                }
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "weightedArithmeticMeanTick" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression
+                                        ( ElementaryType
+                                            ( SignedInteger
+                                                ( Just 24 )
+                                            )
+                                        )
+                                    )
+                                    ( CommaArguments
+                                        [ BinaryExpression Div
+                                            ( IdentifierExpression
+                                                ( Identifier "numerator" )
+                                            )
+                                            ( FunctionCall
+                                                ( TypeExpression
+                                                    ( ElementaryType
+                                                        ( SignedInteger
+                                                            ( Just 256 )
+                                                        )
+                                                    )
+                                                )
+                                                ( CommaArguments
+                                                    [ IdentifierExpression
+                                                        ( Identifier "denominator" )
+                                                    ]
+                                                )
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression And
+                                    ( BinaryExpression LessThan
+                                        ( IdentifierExpression
+                                            ( Identifier "numerator" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 0.0 Nothing )
+                                        )
+                                    )
+                                    ( TupleExpression
+                                        [ Just
+                                            ( BinaryExpression NotEqual
+                                                ( BinaryExpression Mod
+                                                    ( IdentifierExpression
+                                                        ( Identifier "numerator" )
+                                                    )
+                                                    ( FunctionCall
+                                                        ( TypeExpression
+                                                            ( ElementaryType
+                                                                ( SignedInteger
+                                                                    ( Just 256 )
+                                                                )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ IdentifierExpression
+                                                                ( Identifier "denominator" )
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                                ( ExpressionLiteral
+                                                    ( NumberLiteral 0.0 Nothing )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                , trueStmt = ExpressionStatement
+                                    ( UnaryExpression UPreInc
+                                        ( IdentifierExpression
+                                            ( Identifier "weightedArithmeticMeanTick" )
+                                        )
+                                    )
+                                , elseStmt = Nothing
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "getChainedPrice"
+                    , params =
+                        [ Parameter
+                            { kind = ArrayType ( ElementaryType Address ) [ ArrayTypeEmpty ]
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "tokens" )
+                            }
+                        , Parameter
+                            { kind = ArrayType
+                                ( ElementaryType
+                                    ( SignedInteger
+                                        ( Just 24 )
+                                    )
+                                ) [ ArrayTypeEmpty ]
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "ticks" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "syntheticTick" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( FunctionCall
+                                ( IdentifierExpression
+                                    ( Identifier "require" )
+                                )
+                                ( CommaArguments
+                                    [ BinaryExpression Equal
+                                        ( BinaryExpression Sub
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "tokens" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "length" )
+                                                )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 1.0 Nothing )
+                                            )
+                                        )
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "ticks" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                    , ExpressionLiteral
+                                        ( StringLiteral "DL" )
+                                    ]
+                                )
+                            )
+                        , For
+                            ( ForStatement
+                                { initializer = ForInitializerVariable
+                                    ( VariableDecStatement
+                                        ( VariableDeclaration
+                                            { kind = ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 256 )
+                                                )
+                                            , location = Nothing
+                                            , ident = Identifier "i"
+                                            }
+                                        )
+                                        ( Just
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 1.0 Nothing )
+                                            )
+                                        )
+                                    )
+                                , condition = Just
+                                    ( BinaryExpression LessEqual
+                                        ( IdentifierExpression
+                                            ( Identifier "i" )
+                                        )
+                                        ( MemberAccess
+                                            ( IdentifierExpression
+                                                ( Identifier "ticks" )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                    )
+                                , increment = Just
+                                    ( UnaryExpression UPostInc
+                                        ( IdentifierExpression
+                                            ( Identifier "i" )
+                                        )
+                                    )
+                                , body = BlockStatement
+                                    [ ExpressionStatement
+                                        ( ConditionalExpression
+                                            ( BinaryExpression LessThan
+                                                ( IndexExpression
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tokens" )
+                                                    )
+                                                    ( BinaryExpression Sub
+                                                        ( IdentifierExpression
+                                                            ( Identifier "i" )
+                                                        )
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 1.0 Nothing )
+                                                        )
+                                                    )
+                                                )
+                                                ( IndexExpression
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tokens" )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "i" )
+                                                    )
+                                                )
+                                            )
+                                            ( BinaryExpression AssignAdd
+                                                ( IdentifierExpression
+                                                    ( Identifier "syntheticTick" )
+                                                )
+                                                ( IndexExpression
+                                                    ( IdentifierExpression
+                                                        ( Identifier "ticks" )
+                                                    )
+                                                    ( BinaryExpression Sub
+                                                        ( IdentifierExpression
+                                                            ( Identifier "i" )
+                                                        )
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 1.0 Nothing )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                            ( BinaryExpression AssignSub
+                                                ( IdentifierExpression
+                                                    ( Identifier "syntheticTick" )
+                                                )
+                                                ( IndexExpression
+                                                    ( IdentifierExpression
+                                                        ( Identifier "ticks" )
+                                                    )
+                                                    ( BinaryExpression Sub
+                                                        ( IdentifierExpression
+                                                            ( Identifier "i" )
+                                                        )
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 1.0 Nothing )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IndexExpression
+                                                ( IdentifierExpression
+                                                    ( Identifier "tokens" )
+                                                )
+                                                ( BinaryExpression Sub
+                                                    ( IdentifierExpression
+                                                        ( Identifier "i" )
+                                                    )
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 1.0 Nothing )
+                                                    )
+                                                )
+                                            )
+                                            ( ConditionalExpression
+                                                ( ExpressionLiteral ( BooleanLiteral True ) )
+                                                ( ExpressionLiteral
+                                                    ( NumberLiteral 1.0 Nothing )
+                                                )
+                                                ( ExpressionLiteral
+                                                    ( NumberLiteral 2.0 Nothing )
+                                                )
+                                            )
+                                        )
+                                    ]
+                                }
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]
