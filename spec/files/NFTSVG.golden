@@ -1,0 +1,2787 @@
+[ Pragma
+    ( PragmaDefinition
+        { pragma = "solidity >=0.7.6" }
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "@openzeppelin/contracts/utils/Strings.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "src/core/libraries/BitMath.sol" Nothing )
+    )
+, Import
+    ( ImportDefinition
+        ( ImportPath "base64-sol/base64.sol" Nothing )
+    )
+, Library
+    ( LibraryDefinition
+        { name = Identifier "NFTSVG"
+        , body =
+            [ CUsing
+                ( UsingDirective
+                    { binders = UsingDirectiveBoundIdent
+                        ( IdentifierPath
+                            [ Identifier "Strings" ]
+                        )
+                    , bound = DirectiveType
+                        ( ElementaryType
+                            ( UnsignedInteger
+                                ( Just 256 )
+                            )
+                        )
+                    , global = False
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve1"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C41 41 105 105 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve2"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C33 49 97 113 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve3"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C33 57 89 113 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve4"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C25 65 81 121 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve5"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C17 73 73 129 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve6"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C9 81 65 137 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve7"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C1 89 57.5 145 145 145" )
+                        )
+                    }
+                )
+            , CStateVariableDec
+                ( StateVariableDec
+                    { kind = ElementaryType String
+                    , modifiers = Just [ StateConstant ]
+                    , ident = Identifier "curve8"
+                    , expr = Just
+                        ( ExpressionLiteral
+                            ( StringLiteral "M1 1C1 97 49 145 145 145" )
+                        )
+                    }
+                )
+            , CStruct
+                ( StructDefinition
+                    { ident = Identifier "SVGParams"
+                    , members =
+                        [
+                            ( ElementaryType String
+                            , Identifier "quoteToken"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "baseToken"
+                            )
+                        ,
+                            ( ElementaryType Address
+                            , Identifier "poolAddress"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "quoteTokenSymbol"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "baseTokenSymbol"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "feeTier"
+                            )
+                        ,
+                            ( ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , Identifier "tickLower"
+                            )
+                        ,
+                            ( ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , Identifier "tickUpper"
+                            )
+                        ,
+                            ( ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , Identifier "tickSpacing"
+                            )
+                        ,
+                            ( ElementaryType
+                                ( SignedInteger
+                                    ( Just 8 )
+                                )
+                            , Identifier "overRange"
+                            )
+                        ,
+                            ( ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , Identifier "tokenId"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "color0"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "color1"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "color2"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "color3"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "x1"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "y1"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "x2"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "y2"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "x3"
+                            )
+                        ,
+                            ( ElementaryType String
+                            , Identifier "y3"
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVG"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "SVGParams" ]
+                                )
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "params" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ Return
+                            ( Just
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generateSVGDefs" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "params" )
+                                                        ]
+                                                    )
+                                                , FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generateSVGBorderText" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "quoteToken" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "baseToken" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "quoteTokenSymbol" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "baseTokenSymbol" )
+                                                            )
+                                                        ]
+                                                    )
+                                                , FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generateSVGCardMantle" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "quoteTokenSymbol" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "baseTokenSymbol" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "feeTier" )
+                                                            )
+                                                        ]
+                                                    )
+                                                , FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generageSvgCurve" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "tickLower" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "tickUpper" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "tickSpacing" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "overRange" )
+                                                            )
+                                                        ]
+                                                    )
+                                                , FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generateSVGPositionDataAndLocationCurve" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( MemberAccess
+                                                                ( MemberAccess
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "params" )
+                                                                    )
+                                                                    ( MemberAccessIdentifier
+                                                                        ( Identifier "tokenId" )
+                                                                    )
+                                                                )
+                                                                ( MemberAccessIdentifier
+                                                                    ( Identifier "toString" )
+                                                                )
+                                                            )
+                                                            ( CommaArguments [] )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "tickLower" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "tickUpper" )
+                                                            )
+                                                        ]
+                                                    )
+                                                , FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generateSVGRareSparkle" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "tokenId" )
+                                                            )
+                                                        , MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "params" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "poolAddress" )
+                                                            )
+                                                        ]
+                                                    )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</svg>" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVGDefs"
+                    , params =
+                        [ Parameter
+                            { kind = IdentifierType
+                                ( IdentifierPath
+                                    [ Identifier "SVGParams" ]
+                                )
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "params" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "svg" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( StringLiteral "<svg width="290" height="500" viewBox="0 0 290 500" xmlns="http://www.w3.org/2000/svg"" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " xmlns:xlink='http://www.w3.org/1999/xlink'>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<defs>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<filter id="f1"><feImage result="p0" xlink:href="data:image/svg+xml;base64," )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "Base64" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "encode" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( TypeExpression ( ElementaryType Bytes ) )
+                                                            ( CommaArguments
+                                                                [ FunctionCall
+                                                                    ( MemberAccess
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "abi" )
+                                                                        )
+                                                                        ( MemberAccessIdentifier
+                                                                            ( Identifier "encodePacked" )
+                                                                        )
+                                                                    )
+                                                                    ( CommaArguments
+                                                                        [ ExpressionLiteral
+                                                                            ( StringLiteral "<svg width='290' height='500' viewBox='0 0 290 500' xmlns='http://www.w3.org/2000/svg'><rect width='290px' height='500px' fill='#" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "color0" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "'/></svg>" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral ""/><feImage result="p1" xlink:href="data:image/svg+xml;base64," )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "Base64" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "encode" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( TypeExpression ( ElementaryType Bytes ) )
+                                                            ( CommaArguments
+                                                                [ FunctionCall
+                                                                    ( MemberAccess
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "abi" )
+                                                                        )
+                                                                        ( MemberAccessIdentifier
+                                                                            ( Identifier "encodePacked" )
+                                                                        )
+                                                                    )
+                                                                    ( CommaArguments
+                                                                        [ ExpressionLiteral
+                                                                            ( StringLiteral "<svg width='290' height='500' viewBox='0 0 290 500' xmlns='http://www.w3.org/2000/svg'><circle cx='" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "x1" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "' cy='" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "y1" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "' r='120px' fill='#" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "color1" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "'/></svg>" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral ""/><feImage result="p2" xlink:href="data:image/svg+xml;base64," )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "Base64" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "encode" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( TypeExpression ( ElementaryType Bytes ) )
+                                                            ( CommaArguments
+                                                                [ FunctionCall
+                                                                    ( MemberAccess
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "abi" )
+                                                                        )
+                                                                        ( MemberAccessIdentifier
+                                                                            ( Identifier "encodePacked" )
+                                                                        )
+                                                                    )
+                                                                    ( CommaArguments
+                                                                        [ ExpressionLiteral
+                                                                            ( StringLiteral "<svg width='290' height='500' viewBox='0 0 290 500' xmlns='http://www.w3.org/2000/svg'><circle cx='" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "x2" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "' cy='" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "y2" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "' r='120px' fill='#" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "color2" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "'/></svg>" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<feImage result="p3" xlink:href="data:image/svg+xml;base64," )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( IdentifierExpression
+                                                            ( Identifier "Base64" )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "encode" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( TypeExpression ( ElementaryType Bytes ) )
+                                                            ( CommaArguments
+                                                                [ FunctionCall
+                                                                    ( MemberAccess
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "abi" )
+                                                                        )
+                                                                        ( MemberAccessIdentifier
+                                                                            ( Identifier "encodePacked" )
+                                                                        )
+                                                                    )
+                                                                    ( CommaArguments
+                                                                        [ ExpressionLiteral
+                                                                            ( StringLiteral "<svg width='290' height='500' viewBox='0 0 290 500' xmlns='http://www.w3.org/2000/svg'><circle cx='" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "x3" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "' cy='" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "y3" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "' r='100px' fill='#" )
+                                                                        , MemberAccess
+                                                                            ( IdentifierExpression
+                                                                                ( Identifier "params" )
+                                                                            )
+                                                                            ( MemberAccessIdentifier
+                                                                                ( Identifier "color3" )
+                                                                            )
+                                                                        , ExpressionLiteral
+                                                                            ( StringLiteral "'/></svg>" )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "" /><feBlend mode="overlay" in="p0" in2="p1" /><feBlend mode="exclusion" in2="p2" /><feBlend mode="overlay" in2="p3" result="blendOut" /><feGaussianBlur " )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "in="blendOut" stdDeviation="42" /></filter> <clipPath id="corners"><rect width="290" height="500" rx="42" ry="42" /></clipPath>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<path id="text-path-a" d="M40 12 H250 A28 28 0 0 1 278 40 V460 A28 28 0 0 1 250 488 H40 A28 28 0 0 1 12 460 V40 A28 28 0 0 1 40 12 z" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<path id="minimap" d="M234 444C234 457.949 242.21 463 253 463" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<filter id="top-region-blur"><feGaussianBlur in="SourceGraphic" stdDeviation="24" /></filter>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<linearGradient id="grad-up" x1="1" x2="0" y1="1" y2="0"><stop offset="0.0" stop-color="white" stop-opacity="1" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<stop offset=".9" stop-color="white" stop-opacity="0" /></linearGradient>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<linearGradient id="grad-down" x1="0" x2="1" y1="0" y2="1"><stop offset="0.0" stop-color="white" stop-opacity="1" /><stop offset="0.9" stop-color="white" stop-opacity="0" /></linearGradient>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<mask id="fade-up" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#grad-up)" /></mask>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<mask id="fade-down" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#grad-down)" /></mask>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<mask id="none" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="white" /></mask>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<linearGradient id="grad-symbol"><stop offset="0.7" stop-color="white" stop-opacity="1" /><stop offset=".95" stop-color="white" stop-opacity="0" /></linearGradient>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<mask id="fade-symbol" maskContentUnits="userSpaceOnUse"><rect width="290px" height="200px" fill="url(#grad-symbol)" /></mask></defs>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<g clip-path="url(#corners)">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect fill="" )
+                                                , MemberAccess
+                                                    ( IdentifierExpression
+                                                        ( Identifier "params" )
+                                                    )
+                                                    ( MemberAccessIdentifier
+                                                        ( Identifier "color0" )
+                                                    )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "" x="0px" y="0px" width="290px" height="500px" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect style="filter: url(#f1)" x="0px" y="0px" width="290px" height="500px" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <g style="filter:url(#top-region-blur); transform:scale(1.5); transform-origin:center top;">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect fill="none" x="0px" y="0px" width="290px" height="500px" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<ellipse cx="50%" cy="0px" rx="180px" ry="120px" fill="#000" opacity="0.85" /></g>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect x="0" y="0" width="290" height="500" rx="42" ry="42" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,0.2)" /></g>" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVGBorderText"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "quoteToken" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "baseToken" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "quoteTokenSymbol" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "baseTokenSymbol" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "svg" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( StringLiteral "<text text-rendering="optimizeSpeed">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<textPath startOffset="-100%" fill="white" font-family="'Courier New', monospace" font-size="10px" xlink:href="#text-path-a">" )
+                                                , IdentifierExpression
+                                                    ( Identifier "baseToken" )
+                                                , ExpressionLiteral
+                                                    ( UnicodeStringLiteral " • " )
+                                                , IdentifierExpression
+                                                    ( Identifier "baseTokenSymbol" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <animate additive="sum" attributeName="startOffset" from="0%" to="100%" begin="0s" dur="30s" repeatCount="indefinite" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</textPath> <textPath startOffset="0%" fill="white" font-family="'Courier New', monospace" font-size="10px" xlink:href="#text-path-a">" )
+                                                , IdentifierExpression
+                                                    ( Identifier "baseToken" )
+                                                , ExpressionLiteral
+                                                    ( UnicodeStringLiteral " • " )
+                                                , IdentifierExpression
+                                                    ( Identifier "baseTokenSymbol" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <animate additive="sum" attributeName="startOffset" from="0%" to="100%" begin="0s" dur="30s" repeatCount="indefinite" /> </textPath>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<textPath startOffset="50%" fill="white" font-family="'Courier New', monospace" font-size="10px" xlink:href="#text-path-a">" )
+                                                , IdentifierExpression
+                                                    ( Identifier "quoteToken" )
+                                                , ExpressionLiteral
+                                                    ( UnicodeStringLiteral " • " )
+                                                , IdentifierExpression
+                                                    ( Identifier "quoteTokenSymbol" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <animate additive="sum" attributeName="startOffset" from="0%" to="100%" begin="0s" dur="30s"" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " repeatCount="indefinite" /></textPath><textPath startOffset="-50%" fill="white" font-family="'Courier New', monospace" font-size="10px" xlink:href="#text-path-a">" )
+                                                , IdentifierExpression
+                                                    ( Identifier "quoteToken" )
+                                                , ExpressionLiteral
+                                                    ( UnicodeStringLiteral " • " )
+                                                , IdentifierExpression
+                                                    ( Identifier "quoteTokenSymbol" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <animate additive="sum" attributeName="startOffset" from="0%" to="100%" begin="0s" dur="30s" repeatCount="indefinite" /></textPath></text>" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVGCardMantle"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "quoteTokenSymbol" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "baseTokenSymbol" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "feeTier" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "svg" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( StringLiteral "<g mask="url(#fade-symbol)"><rect fill="none" x="0px" y="0px" width="290px" height="200px" /> <text y="70px" x="32px" fill="white" font-family="'Courier New', monospace" font-weight="200" font-size="36px">" )
+                                                , IdentifierExpression
+                                                    ( Identifier "quoteTokenSymbol" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "/" )
+                                                , IdentifierExpression
+                                                    ( Identifier "baseTokenSymbol" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</text><text y="115px" x="32px" fill="white" font-family="'Courier New', monospace" font-weight="200" font-size="36px">" )
+                                                , IdentifierExpression
+                                                    ( Identifier "feeTier" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</text></g>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect x="16" y="16" width="258" height="468" rx="26" ry="26" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,0.2)" />" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generageSvgCurve"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickLower" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickUpper" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickSpacing" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 8 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "overRange" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "fade"
+                                    }
+                                )
+                                ( Just
+                                    ( ConditionalExpression
+                                        ( BinaryExpression Equal
+                                            ( IdentifierExpression
+                                                ( Identifier "overRange" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 1.0 Nothing )
+                                            )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( StringLiteral "#fade-up" )
+                                        )
+                                        ( ConditionalExpression
+                                            ( BinaryExpression Equal
+                                                ( IdentifierExpression
+                                                    ( Identifier "overRange" )
+                                                )
+                                                ( UnaryExpression UPreSub
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 1.0 Nothing )
+                                                    )
+                                                )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( StringLiteral "#fade-down" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( StringLiteral "#none" )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "curve"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "getCurve" )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "tickLower" )
+                                            , IdentifierExpression
+                                                ( Identifier "tickUpper" )
+                                            , IdentifierExpression
+                                                ( Identifier "tickSpacing" )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "svg" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( StringLiteral "<g mask="url(" )
+                                                , IdentifierExpression
+                                                    ( Identifier "fade" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral ")"" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " style="transform:translate(72px,189px)"><rect x="-16px" y="-16px" width="180px" height="180px" fill="none" /><path d="" )
+                                                , IdentifierExpression
+                                                    ( Identifier "curve" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "" stroke="rgba(0,0,0,0.3)" stroke-width="32px" fill="none" stroke-linecap="round" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</g><g mask="url(" )
+                                                , IdentifierExpression
+                                                    ( Identifier "fade" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral ")"" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " style="transform:translate(72px,189px)">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect x="-16px" y="-16px" width="180px" height="180px" fill="none" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<path d="" )
+                                                , IdentifierExpression
+                                                    ( Identifier "curve" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "" stroke="rgba(255,255,255,1)" fill="none" stroke-linecap="round" /></g>" )
+                                                , FunctionCall
+                                                    ( IdentifierExpression
+                                                        ( Identifier "generateSVGCurveCircle" )
+                                                    )
+                                                    ( CommaArguments
+                                                        [ IdentifierExpression
+                                                            ( Identifier "overRange" )
+                                                        ]
+                                                    )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "getCurve"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickLower" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickUpper" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickSpacing" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "curve" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( SignedInteger
+                                            ( Just 24 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "tickRange"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Div
+                                        ( TupleExpression
+                                            [ Just
+                                                ( BinaryExpression Sub
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tickUpper" )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tickLower" )
+                                                    )
+                                                )
+                                            ]
+                                        )
+                                        ( IdentifierExpression
+                                            ( Identifier "tickSpacing" )
+                                        )
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression LessEqual
+                                    ( IdentifierExpression
+                                        ( Identifier "tickRange" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 4.0 Nothing )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IdentifierExpression
+                                                ( Identifier "curve" )
+                                            )
+                                            ( IdentifierExpression
+                                                ( Identifier "curve1" )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( If
+                                        ( IfStatement
+                                            { expr = BinaryExpression LessEqual
+                                                ( IdentifierExpression
+                                                    ( Identifier "tickRange" )
+                                                )
+                                                ( ExpressionLiteral
+                                                    ( NumberLiteral 8.0 Nothing )
+                                                )
+                                            , trueStmt = BlockStatement
+                                                [ ExpressionStatement
+                                                    ( BinaryExpression Assign
+                                                        ( IdentifierExpression
+                                                            ( Identifier "curve" )
+                                                        )
+                                                        ( IdentifierExpression
+                                                            ( Identifier "curve2" )
+                                                        )
+                                                    )
+                                                ]
+                                            , elseStmt = Just
+                                                ( If
+                                                    ( IfStatement
+                                                        { expr = BinaryExpression LessEqual
+                                                            ( IdentifierExpression
+                                                                ( Identifier "tickRange" )
+                                                            )
+                                                            ( ExpressionLiteral
+                                                                ( NumberLiteral 16.0 Nothing )
+                                                            )
+                                                        , trueStmt = BlockStatement
+                                                            [ ExpressionStatement
+                                                                ( BinaryExpression Assign
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "curve" )
+                                                                    )
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "curve3" )
+                                                                    )
+                                                                )
+                                                            ]
+                                                        , elseStmt = Just
+                                                            ( If
+                                                                ( IfStatement
+                                                                    { expr = BinaryExpression LessEqual
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "tickRange" )
+                                                                        )
+                                                                        ( ExpressionLiteral
+                                                                            ( NumberLiteral 32.0 Nothing )
+                                                                        )
+                                                                    , trueStmt = BlockStatement
+                                                                        [ ExpressionStatement
+                                                                            ( BinaryExpression Assign
+                                                                                ( IdentifierExpression
+                                                                                    ( Identifier "curve" )
+                                                                                )
+                                                                                ( IdentifierExpression
+                                                                                    ( Identifier "curve4" )
+                                                                                )
+                                                                            )
+                                                                        ]
+                                                                    , elseStmt = Just
+                                                                        ( If
+                                                                            ( IfStatement
+                                                                                { expr = BinaryExpression LessEqual
+                                                                                    ( IdentifierExpression
+                                                                                        ( Identifier "tickRange" )
+                                                                                    )
+                                                                                    ( ExpressionLiteral
+                                                                                        ( NumberLiteral 64.0 Nothing )
+                                                                                    )
+                                                                                , trueStmt = BlockStatement
+                                                                                    [ ExpressionStatement
+                                                                                        ( BinaryExpression Assign
+                                                                                            ( IdentifierExpression
+                                                                                                ( Identifier "curve" )
+                                                                                            )
+                                                                                            ( IdentifierExpression
+                                                                                                ( Identifier "curve5" )
+                                                                                            )
+                                                                                        )
+                                                                                    ]
+                                                                                , elseStmt = Just
+                                                                                    ( If
+                                                                                        ( IfStatement
+                                                                                            { expr = BinaryExpression LessEqual
+                                                                                                ( IdentifierExpression
+                                                                                                    ( Identifier "tickRange" )
+                                                                                                )
+                                                                                                ( ExpressionLiteral
+                                                                                                    ( NumberLiteral 128.0 Nothing )
+                                                                                                )
+                                                                                            , trueStmt = BlockStatement
+                                                                                                [ ExpressionStatement
+                                                                                                    ( BinaryExpression Assign
+                                                                                                        ( IdentifierExpression
+                                                                                                            ( Identifier "curve" )
+                                                                                                        )
+                                                                                                        ( IdentifierExpression
+                                                                                                            ( Identifier "curve6" )
+                                                                                                        )
+                                                                                                    )
+                                                                                                ]
+                                                                                            , elseStmt = Just
+                                                                                                ( If
+                                                                                                    ( IfStatement
+                                                                                                        { expr = BinaryExpression LessEqual
+                                                                                                            ( IdentifierExpression
+                                                                                                                ( Identifier "tickRange" )
+                                                                                                            )
+                                                                                                            ( ExpressionLiteral
+                                                                                                                ( NumberLiteral 256.0 Nothing )
+                                                                                                            )
+                                                                                                        , trueStmt = BlockStatement
+                                                                                                            [ ExpressionStatement
+                                                                                                                ( BinaryExpression Assign
+                                                                                                                    ( IdentifierExpression
+                                                                                                                        ( Identifier "curve" )
+                                                                                                                    )
+                                                                                                                    ( IdentifierExpression
+                                                                                                                        ( Identifier "curve7" )
+                                                                                                                    )
+                                                                                                                )
+                                                                                                            ]
+                                                                                                        , elseStmt = Just
+                                                                                                            ( BlockStatement
+                                                                                                                [ ExpressionStatement
+                                                                                                                    ( BinaryExpression Assign
+                                                                                                                        ( IdentifierExpression
+                                                                                                                            ( Identifier "curve" )
+                                                                                                                        )
+                                                                                                                        ( IdentifierExpression
+                                                                                                                            ( Identifier "curve8" )
+                                                                                                                        )
+                                                                                                                    )
+                                                                                                                ]
+                                                                                                            )
+                                                                                                        }
+                                                                                                    )
+                                                                                                )
+                                                                                            }
+                                                                                        )
+                                                                                    )
+                                                                                }
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVGCurveCircle"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 8 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "overRange" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "curvex1"
+                                    }
+                                )
+                                ( Just
+                                    ( ExpressionLiteral
+                                        ( StringLiteral "73" )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "curvey1"
+                                    }
+                                )
+                                ( Just
+                                    ( ExpressionLiteral
+                                        ( StringLiteral "190" )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "curvex2"
+                                    }
+                                )
+                                ( Just
+                                    ( ExpressionLiteral
+                                        ( StringLiteral "217" )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "curvey2"
+                                    }
+                                )
+                                ( Just
+                                    ( ExpressionLiteral
+                                        ( StringLiteral "334" )
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression Or
+                                    ( BinaryExpression Equal
+                                        ( IdentifierExpression
+                                            ( Identifier "overRange" )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 1.0 Nothing )
+                                        )
+                                    )
+                                    ( BinaryExpression Equal
+                                        ( IdentifierExpression
+                                            ( Identifier "overRange" )
+                                        )
+                                        ( UnaryExpression UPreSub
+                                            ( ExpressionLiteral
+                                                ( NumberLiteral 1.0 Nothing )
+                                            )
+                                        )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IdentifierExpression
+                                                ( Identifier "svg" )
+                                            )
+                                            ( FunctionCall
+                                                ( TypeExpression ( ElementaryType String ) )
+                                                ( CommaArguments
+                                                    [ FunctionCall
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "abi" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "encodePacked" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ ExpressionLiteral
+                                                                ( StringLiteral "<circle cx="" )
+                                                            , ConditionalExpression
+                                                                ( BinaryExpression Equal
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "overRange" )
+                                                                    )
+                                                                    ( UnaryExpression UPreSub
+                                                                        ( ExpressionLiteral
+                                                                            ( NumberLiteral 1.0 Nothing )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvex1" )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvex2" )
+                                                                )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "px" cy="" )
+                                                            , ConditionalExpression
+                                                                ( BinaryExpression Equal
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "overRange" )
+                                                                    )
+                                                                    ( UnaryExpression UPreSub
+                                                                        ( ExpressionLiteral
+                                                                            ( NumberLiteral 1.0 Nothing )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvey1" )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvey2" )
+                                                                )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "px" r="4px" fill="white" /><circle cx="" )
+                                                            , ConditionalExpression
+                                                                ( BinaryExpression Equal
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "overRange" )
+                                                                    )
+                                                                    ( UnaryExpression UPreSub
+                                                                        ( ExpressionLiteral
+                                                                            ( NumberLiteral 1.0 Nothing )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvex1" )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvex2" )
+                                                                )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "px" cy="" )
+                                                            , ConditionalExpression
+                                                                ( BinaryExpression Equal
+                                                                    ( IdentifierExpression
+                                                                        ( Identifier "overRange" )
+                                                                    )
+                                                                    ( UnaryExpression UPreSub
+                                                                        ( ExpressionLiteral
+                                                                            ( NumberLiteral 1.0 Nothing )
+                                                                        )
+                                                                    )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvey1" )
+                                                                )
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "curvey2" )
+                                                                )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "px" r="24px" fill="none" stroke="white" />" )
+                                                            ]
+                                                        )
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ ExpressionStatement
+                                            ( BinaryExpression Assign
+                                                ( IdentifierExpression
+                                                    ( Identifier "svg" )
+                                                )
+                                                ( FunctionCall
+                                                    ( TypeExpression ( ElementaryType String ) )
+                                                    ( CommaArguments
+                                                        [ FunctionCall
+                                                            ( MemberAccess
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "abi" )
+                                                                )
+                                                                ( MemberAccessIdentifier
+                                                                    ( Identifier "encodePacked" )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ ExpressionLiteral
+                                                                    ( StringLiteral "<circle cx="" )
+                                                                , IdentifierExpression
+                                                                    ( Identifier "curvex1" )
+                                                                , ExpressionLiteral
+                                                                    ( StringLiteral "px" cy="" )
+                                                                , IdentifierExpression
+                                                                    ( Identifier "curvey1" )
+                                                                , ExpressionLiteral
+                                                                    ( StringLiteral "px" r="4px" fill="white" />" )
+                                                                , ExpressionLiteral
+                                                                    ( StringLiteral "<circle cx="" )
+                                                                , IdentifierExpression
+                                                                    ( Identifier "curvex2" )
+                                                                , ExpressionLiteral
+                                                                    ( StringLiteral "px" cy="" )
+                                                                , IdentifierExpression
+                                                                    ( Identifier "curvey2" )
+                                                                , ExpressionLiteral
+                                                                    ( StringLiteral "px" r="4px" fill="white" />" )
+                                                                ]
+                                                            )
+                                                        ]
+                                                    )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVGPositionDataAndLocationCurve"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "tokenId" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickLower" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickUpper" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "tickLowerStr"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "tickToString" )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "tickLower" )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "tickUpperStr"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "tickToString" )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "tickUpper" )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "str1length"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Add
+                                        ( MemberAccess
+                                            ( FunctionCall
+                                                ( TypeExpression ( ElementaryType Bytes ) )
+                                                ( CommaArguments
+                                                    [ IdentifierExpression
+                                                        ( Identifier "tokenId" )
+                                                    ]
+                                                )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 4.0 Nothing )
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "str2length"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Add
+                                        ( MemberAccess
+                                            ( FunctionCall
+                                                ( TypeExpression ( ElementaryType Bytes ) )
+                                                ( CommaArguments
+                                                    [ IdentifierExpression
+                                                        ( Identifier "tickLowerStr" )
+                                                    ]
+                                                )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 10.0 Nothing )
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( UnsignedInteger
+                                            ( Just 256 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "str3length"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Add
+                                        ( MemberAccess
+                                            ( FunctionCall
+                                                ( TypeExpression ( ElementaryType Bytes ) )
+                                                ( CommaArguments
+                                                    [ IdentifierExpression
+                                                        ( Identifier "tickUpperStr" )
+                                                    ]
+                                                )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "length" )
+                                            )
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 10.0 Nothing )
+                                        )
+                                    )
+                                )
+                            )
+                        , VariableStatement
+                            ( VariableDecTupleStatement
+                                [ Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType String
+                                        , location = Just Memory
+                                        , ident = Identifier "xCoord"
+                                        }
+                                    )
+                                , Just
+                                    ( VariableDeclaration
+                                        { kind = ElementaryType String
+                                        , location = Just Memory
+                                        , ident = Identifier "yCoord"
+                                        }
+                                    )
+                                ]
+                                ( FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "rangeLocation" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "tickLower" )
+                                        , IdentifierExpression
+                                            ( Identifier "tickUpper" )
+                                        ]
+                                    )
+                                )
+                            )
+                        , ExpressionStatement
+                            ( BinaryExpression Assign
+                                ( IdentifierExpression
+                                    ( Identifier "svg" )
+                                )
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ ExpressionLiteral
+                                                    ( StringLiteral " <g style="transform:translate(29px, 384px)">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect width="" )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( TypeExpression
+                                                                ( ElementaryType
+                                                                    ( UnsignedInteger
+                                                                        ( Just 256 )
+                                                                    )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ BinaryExpression Mul
+                                                                    ( ExpressionLiteral
+                                                                        ( NumberLiteral 7.0 Nothing )
+                                                                    )
+                                                                    ( TupleExpression
+                                                                        [ Just
+                                                                            ( BinaryExpression Add
+                                                                                ( IdentifierExpression
+                                                                                    ( Identifier "str1length" )
+                                                                                )
+                                                                                ( ExpressionLiteral
+                                                                                    ( NumberLiteral 4.0 Nothing )
+                                                                                )
+                                                                            )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "toString" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments [] )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "px" height="26px" rx="8px" ry="8px" fill="rgba(0,0,0,0.6)" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<text x="12px" y="17px" font-family="'Courier New', monospace" font-size="12px" fill="white"><tspan fill="rgba(255,255,255,0.6)">ID: </tspan>" )
+                                                , IdentifierExpression
+                                                    ( Identifier "tokenId" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</text></g>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <g style="transform:translate(29px, 414px)">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect width="" )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( TypeExpression
+                                                                ( ElementaryType
+                                                                    ( UnsignedInteger
+                                                                        ( Just 256 )
+                                                                    )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ BinaryExpression Mul
+                                                                    ( ExpressionLiteral
+                                                                        ( NumberLiteral 7.0 Nothing )
+                                                                    )
+                                                                    ( TupleExpression
+                                                                        [ Just
+                                                                            ( BinaryExpression Add
+                                                                                ( IdentifierExpression
+                                                                                    ( Identifier "str2length" )
+                                                                                )
+                                                                                ( ExpressionLiteral
+                                                                                    ( NumberLiteral 4.0 Nothing )
+                                                                                )
+                                                                            )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "toString" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments [] )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "px" height="26px" rx="8px" ry="8px" fill="rgba(0,0,0,0.6)" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<text x="12px" y="17px" font-family="'Courier New', monospace" font-size="12px" fill="white"><tspan fill="rgba(255,255,255,0.6)">Min Tick: </tspan>" )
+                                                , IdentifierExpression
+                                                    ( Identifier "tickLowerStr" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</text></g>" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral " <g style="transform:translate(29px, 444px)">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect width="" )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( TypeExpression
+                                                                ( ElementaryType
+                                                                    ( UnsignedInteger
+                                                                        ( Just 256 )
+                                                                    )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ BinaryExpression Mul
+                                                                    ( ExpressionLiteral
+                                                                        ( NumberLiteral 7.0 Nothing )
+                                                                    )
+                                                                    ( TupleExpression
+                                                                        [ Just
+                                                                            ( BinaryExpression Add
+                                                                                ( IdentifierExpression
+                                                                                    ( Identifier "str3length" )
+                                                                                )
+                                                                                ( ExpressionLiteral
+                                                                                    ( NumberLiteral 4.0 Nothing )
+                                                                                )
+                                                                            )
+                                                                        ]
+                                                                    )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "toString" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments [] )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "px" height="26px" rx="8px" ry="8px" fill="rgba(0,0,0,0.6)" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<text x="12px" y="17px" font-family="'Courier New', monospace" font-size="12px" fill="white"><tspan fill="rgba(255,255,255,0.6)">Max Tick: </tspan>" )
+                                                , IdentifierExpression
+                                                    ( Identifier "tickUpperStr" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "</text></g><g style="transform:translate(226px, 433px)">" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<rect width="36px" height="36px" rx="8px" ry="8px" fill="none" stroke="rgba(255,255,255,0.2)" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<path stroke-linecap="round" d="M8 9C8.00004 22.9494 16.2099 28 27 28" fill="none" stroke="white" />" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "<circle style="transform:translate3d(" )
+                                                , IdentifierExpression
+                                                    ( Identifier "xCoord" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "px, " )
+                                                , IdentifierExpression
+                                                    ( Identifier "yCoord" )
+                                                , ExpressionLiteral
+                                                    ( StringLiteral "px, 0px)" cx="0px" cy="0px" r="4px" fill="white"/></g>" )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "tickToString"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tick" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType String
+                                    , location = Just Memory
+                                    , ident = Identifier "sign"
+                                    }
+                                )
+                                ( Just
+                                    ( ExpressionLiteral
+                                        ( StringLiteral "" )
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression LessThan
+                                    ( IdentifierExpression
+                                        ( Identifier "tick" )
+                                    )
+                                    ( ExpressionLiteral
+                                        ( NumberLiteral 0.0 Nothing )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IdentifierExpression
+                                                ( Identifier "tick" )
+                                            )
+                                            ( BinaryExpression Mul
+                                                ( IdentifierExpression
+                                                    ( Identifier "tick" )
+                                                )
+                                                ( UnaryExpression UPreSub
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 1.0 Nothing )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IdentifierExpression
+                                                ( Identifier "sign" )
+                                            )
+                                            ( ExpressionLiteral
+                                                ( StringLiteral "-" )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Nothing
+                                }
+                            )
+                        , Return
+                            ( Just
+                                ( FunctionCall
+                                    ( TypeExpression ( ElementaryType String ) )
+                                    ( CommaArguments
+                                        [ FunctionCall
+                                            ( MemberAccess
+                                                ( IdentifierExpression
+                                                    ( Identifier "abi" )
+                                                )
+                                                ( MemberAccessIdentifier
+                                                    ( Identifier "encodePacked" )
+                                                )
+                                            )
+                                            ( CommaArguments
+                                                [ IdentifierExpression
+                                                    ( Identifier "sign" )
+                                                , FunctionCall
+                                                    ( MemberAccess
+                                                        ( FunctionCall
+                                                            ( TypeExpression
+                                                                ( ElementaryType
+                                                                    ( UnsignedInteger
+                                                                        ( Just 256 )
+                                                                    )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ IdentifierExpression
+                                                                    ( Identifier "tick" )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( MemberAccessIdentifier
+                                                            ( Identifier "toString" )
+                                                        )
+                                                    )
+                                                    ( CommaArguments [] )
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "rangeLocation"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickLower" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType
+                                ( SignedInteger
+                                    ( Just 24 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tickUpper" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        , Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( SignedInteger
+                                            ( Just 24 )
+                                        )
+                                    , location = Nothing
+                                    , ident = Identifier "midPoint"
+                                    }
+                                )
+                                ( Just
+                                    ( BinaryExpression Div
+                                        ( TupleExpression
+                                            [ Just
+                                                ( BinaryExpression Add
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tickLower" )
+                                                    )
+                                                    ( IdentifierExpression
+                                                        ( Identifier "tickUpper" )
+                                                    )
+                                                )
+                                            ]
+                                        )
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 2.0 Nothing )
+                                        )
+                                    )
+                                )
+                            )
+                        , If
+                            ( IfStatement
+                                { expr = BinaryExpression LessThan
+                                    ( IdentifierExpression
+                                        ( Identifier "midPoint" )
+                                    )
+                                    ( UnaryExpression UPreSub
+                                        ( ExpressionLiteral
+                                            ( NumberLiteral 125000.0 Nothing )
+                                        )
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ Return
+                                        ( Just
+                                            ( TupleExpression
+                                                [ Just
+                                                    ( ExpressionLiteral
+                                                        ( StringLiteral "8" )
+                                                    )
+                                                , Just
+                                                    ( ExpressionLiteral
+                                                        ( StringLiteral "7" )
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( If
+                                        ( IfStatement
+                                            { expr = BinaryExpression LessThan
+                                                ( IdentifierExpression
+                                                    ( Identifier "midPoint" )
+                                                )
+                                                ( UnaryExpression UPreSub
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 75000.0 Nothing )
+                                                    )
+                                                )
+                                            , trueStmt = BlockStatement
+                                                [ Return
+                                                    ( Just
+                                                        ( TupleExpression
+                                                            [ Just
+                                                                ( ExpressionLiteral
+                                                                    ( StringLiteral "8" )
+                                                                )
+                                                            , Just
+                                                                ( ExpressionLiteral
+                                                                    ( StringLiteral "10.5" )
+                                                                )
+                                                            ]
+                                                        )
+                                                    )
+                                                ]
+                                            , elseStmt = Just
+                                                ( If
+                                                    ( IfStatement
+                                                        { expr = BinaryExpression LessThan
+                                                            ( IdentifierExpression
+                                                                ( Identifier "midPoint" )
+                                                            )
+                                                            ( UnaryExpression UPreSub
+                                                                ( ExpressionLiteral
+                                                                    ( NumberLiteral 25000.0 Nothing )
+                                                                )
+                                                            )
+                                                        , trueStmt = BlockStatement
+                                                            [ Return
+                                                                ( Just
+                                                                    ( TupleExpression
+                                                                        [ Just
+                                                                            ( ExpressionLiteral
+                                                                                ( StringLiteral "8" )
+                                                                            )
+                                                                        , Just
+                                                                            ( ExpressionLiteral
+                                                                                ( StringLiteral "14.25" )
+                                                                            )
+                                                                        ]
+                                                                    )
+                                                                )
+                                                            ]
+                                                        , elseStmt = Just
+                                                            ( If
+                                                                ( IfStatement
+                                                                    { expr = BinaryExpression LessThan
+                                                                        ( IdentifierExpression
+                                                                            ( Identifier "midPoint" )
+                                                                        )
+                                                                        ( UnaryExpression UPreSub
+                                                                            ( ExpressionLiteral
+                                                                                ( NumberLiteral 5000.0 Nothing )
+                                                                            )
+                                                                        )
+                                                                    , trueStmt = BlockStatement
+                                                                        [ Return
+                                                                            ( Just
+                                                                                ( TupleExpression
+                                                                                    [ Just
+                                                                                        ( ExpressionLiteral
+                                                                                            ( StringLiteral "10" )
+                                                                                        )
+                                                                                    , Just
+                                                                                        ( ExpressionLiteral
+                                                                                            ( StringLiteral "18" )
+                                                                                        )
+                                                                                    ]
+                                                                                )
+                                                                            )
+                                                                        ]
+                                                                    , elseStmt = Just
+                                                                        ( If
+                                                                            ( IfStatement
+                                                                                { expr = BinaryExpression LessThan
+                                                                                    ( IdentifierExpression
+                                                                                        ( Identifier "midPoint" )
+                                                                                    )
+                                                                                    ( ExpressionLiteral
+                                                                                        ( NumberLiteral 0.0 Nothing )
+                                                                                    )
+                                                                                , trueStmt = BlockStatement
+                                                                                    [ Return
+                                                                                        ( Just
+                                                                                            ( TupleExpression
+                                                                                                [ Just
+                                                                                                    ( ExpressionLiteral
+                                                                                                        ( StringLiteral "11" )
+                                                                                                    )
+                                                                                                , Just
+                                                                                                    ( ExpressionLiteral
+                                                                                                        ( StringLiteral "21" )
+                                                                                                    )
+                                                                                                ]
+                                                                                            )
+                                                                                        )
+                                                                                    ]
+                                                                                , elseStmt = Just
+                                                                                    ( If
+                                                                                        ( IfStatement
+                                                                                            { expr = BinaryExpression LessThan
+                                                                                                ( IdentifierExpression
+                                                                                                    ( Identifier "midPoint" )
+                                                                                                )
+                                                                                                ( ExpressionLiteral
+                                                                                                    ( NumberLiteral 5000.0 Nothing )
+                                                                                                )
+                                                                                            , trueStmt = BlockStatement
+                                                                                                [ Return
+                                                                                                    ( Just
+                                                                                                        ( TupleExpression
+                                                                                                            [ Just
+                                                                                                                ( ExpressionLiteral
+                                                                                                                    ( StringLiteral "13" )
+                                                                                                                )
+                                                                                                            , Just
+                                                                                                                ( ExpressionLiteral
+                                                                                                                    ( StringLiteral "23" )
+                                                                                                                )
+                                                                                                            ]
+                                                                                                        )
+                                                                                                    )
+                                                                                                ]
+                                                                                            , elseStmt = Just
+                                                                                                ( If
+                                                                                                    ( IfStatement
+                                                                                                        { expr = BinaryExpression LessThan
+                                                                                                            ( IdentifierExpression
+                                                                                                                ( Identifier "midPoint" )
+                                                                                                            )
+                                                                                                            ( ExpressionLiteral
+                                                                                                                ( NumberLiteral 25000.0 Nothing )
+                                                                                                            )
+                                                                                                        , trueStmt = BlockStatement
+                                                                                                            [ Return
+                                                                                                                ( Just
+                                                                                                                    ( TupleExpression
+                                                                                                                        [ Just
+                                                                                                                            ( ExpressionLiteral
+                                                                                                                                ( StringLiteral "15" )
+                                                                                                                            )
+                                                                                                                        , Just
+                                                                                                                            ( ExpressionLiteral
+                                                                                                                                ( StringLiteral "25" )
+                                                                                                                            )
+                                                                                                                        ]
+                                                                                                                    )
+                                                                                                                )
+                                                                                                            ]
+                                                                                                        , elseStmt = Just
+                                                                                                            ( If
+                                                                                                                ( IfStatement
+                                                                                                                    { expr = BinaryExpression LessThan
+                                                                                                                        ( IdentifierExpression
+                                                                                                                            ( Identifier "midPoint" )
+                                                                                                                        )
+                                                                                                                        ( ExpressionLiteral
+                                                                                                                            ( NumberLiteral 75000.0 Nothing )
+                                                                                                                        )
+                                                                                                                    , trueStmt = BlockStatement
+                                                                                                                        [ Return
+                                                                                                                            ( Just
+                                                                                                                                ( TupleExpression
+                                                                                                                                    [ Just
+                                                                                                                                        ( ExpressionLiteral
+                                                                                                                                            ( StringLiteral "18" )
+                                                                                                                                        )
+                                                                                                                                    , Just
+                                                                                                                                        ( ExpressionLiteral
+                                                                                                                                            ( StringLiteral "26" )
+                                                                                                                                        )
+                                                                                                                                    ]
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        ]
+                                                                                                                    , elseStmt = Just
+                                                                                                                        ( If
+                                                                                                                            ( IfStatement
+                                                                                                                                { expr = BinaryExpression LessThan
+                                                                                                                                    ( IdentifierExpression
+                                                                                                                                        ( Identifier "midPoint" )
+                                                                                                                                    )
+                                                                                                                                    ( ExpressionLiteral
+                                                                                                                                        ( NumberLiteral 125000.0 Nothing )
+                                                                                                                                    )
+                                                                                                                                , trueStmt = BlockStatement
+                                                                                                                                    [ Return
+                                                                                                                                        ( Just
+                                                                                                                                            ( TupleExpression
+                                                                                                                                                [ Just
+                                                                                                                                                    ( ExpressionLiteral
+                                                                                                                                                        ( StringLiteral "21" )
+                                                                                                                                                    )
+                                                                                                                                                , Just
+                                                                                                                                                    ( ExpressionLiteral
+                                                                                                                                                        ( StringLiteral "27" )
+                                                                                                                                                    )
+                                                                                                                                                ]
+                                                                                                                                            )
+                                                                                                                                        )
+                                                                                                                                    ]
+                                                                                                                                , elseStmt = Just
+                                                                                                                                    ( BlockStatement
+                                                                                                                                        [ Return
+                                                                                                                                            ( Just
+                                                                                                                                                ( TupleExpression
+                                                                                                                                                    [ Just
+                                                                                                                                                        ( ExpressionLiteral
+                                                                                                                                                            ( StringLiteral "24" )
+                                                                                                                                                        )
+                                                                                                                                                    , Just
+                                                                                                                                                        ( ExpressionLiteral
+                                                                                                                                                            ( StringLiteral "27" )
+                                                                                                                                                        )
+                                                                                                                                                    ]
+                                                                                                                                                )
+                                                                                                                                            )
+                                                                                                                                        ]
+                                                                                                                                    )
+                                                                                                                                }
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    }
+                                                                                                                )
+                                                                                                            )
+                                                                                                        }
+                                                                                                    )
+                                                                                                )
+                                                                                            }
+                                                                                        )
+                                                                                    )
+                                                                                }
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "generateSVGRareSparkle"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tokenId" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "poolAddress" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncPrivate
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType String
+                            , location = Just Memory
+                            , ident = Just
+                                ( Identifier "svg" )
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ If
+                            ( IfStatement
+                                { expr = FunctionCall
+                                    ( IdentifierExpression
+                                        ( Identifier "isRare" )
+                                    )
+                                    ( CommaArguments
+                                        [ IdentifierExpression
+                                            ( Identifier "tokenId" )
+                                        , IdentifierExpression
+                                            ( Identifier "poolAddress" )
+                                        ]
+                                    )
+                                , trueStmt = BlockStatement
+                                    [ ExpressionStatement
+                                        ( BinaryExpression Assign
+                                            ( IdentifierExpression
+                                                ( Identifier "svg" )
+                                            )
+                                            ( FunctionCall
+                                                ( TypeExpression ( ElementaryType String ) )
+                                                ( CommaArguments
+                                                    [ FunctionCall
+                                                        ( MemberAccess
+                                                            ( IdentifierExpression
+                                                                ( Identifier "abi" )
+                                                            )
+                                                            ( MemberAccessIdentifier
+                                                                ( Identifier "encodePacked" )
+                                                            )
+                                                        )
+                                                        ( CommaArguments
+                                                            [ ExpressionLiteral
+                                                                ( StringLiteral "<g style="transform:translate(226px, 392px)"><rect width="36px" height="36px" rx="8px" ry="8px" fill="none" stroke="rgba(255,255,255,0.2)" />" )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "<g><path style="transform:translate(6px,6px)" d="M12 0L12.6522 9.56587L18 1.6077L13.7819 10.2181L22.3923 6L14.4341 " )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "11.3478L24 12L14.4341 12.6522L22.3923 18L13.7819 13.7819L18 22.3923L12.6522 14.4341L12 24L11.3478 14.4341L6 22.39" )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "23L10.2181 13.7819L1.6077 18L9.56587 12.6522L0 12L9.56587 11.3478L1.6077 6L10.2181 10.2181L6 1.6077L11.3478 9.56587L12 0Z" fill="white" />" )
+                                                            , ExpressionLiteral
+                                                                ( StringLiteral "<animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="10s" repeatCount="indefinite"/></g></g>" )
+                                                            ]
+                                                        )
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    ]
+                                , elseStmt = Just
+                                    ( BlockStatement
+                                        [ ExpressionStatement
+                                            ( BinaryExpression Assign
+                                                ( IdentifierExpression
+                                                    ( Identifier "svg" )
+                                                )
+                                                ( ExpressionLiteral
+                                                    ( StringLiteral "" )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                }
+                            )
+                        ]
+                    }
+                )
+            , CFunction
+                ( FunctionDefinition
+                    { name = Identifier "isRare"
+                    , params =
+                        [ Parameter
+                            { kind = ElementaryType
+                                ( UnsignedInteger
+                                    ( Just 256 )
+                                )
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "tokenId" )
+                            }
+                        , Parameter
+                            { kind = ElementaryType Address
+                            , location = Nothing
+                            , ident = Just
+                                ( Identifier "poolAddress" )
+                            }
+                        ]
+                    , restrictions =
+                        [ FuncVisibility FuncInternal
+                        , FuncMutability Pure
+                        ]
+                    , returns = Just
+                        [ Parameter
+                            { kind = ElementaryType Bool
+                            , location = Nothing
+                            , ident = Nothing
+                            }
+                        ]
+                    , body = BlockStatement
+                        [ VariableStatement
+                            ( VariableDecStatement
+                                ( VariableDeclaration
+                                    { kind = ElementaryType
+                                        ( FixedBytes 32 )
+                                    , location = Nothing
+                                    , ident = Identifier "h"
+                                    }
+                                )
+                                ( Just
+                                    ( FunctionCall
+                                        ( IdentifierExpression
+                                            ( Identifier "keccak256" )
+                                        )
+                                        ( CommaArguments
+                                            [ FunctionCall
+                                                ( MemberAccess
+                                                    ( IdentifierExpression
+                                                        ( Identifier "abi" )
+                                                    )
+                                                    ( MemberAccessIdentifier
+                                                        ( Identifier "encodePacked" )
+                                                    )
+                                                )
+                                                ( CommaArguments
+                                                    [ IdentifierExpression
+                                                        ( Identifier "tokenId" )
+                                                    , IdentifierExpression
+                                                        ( Identifier "poolAddress" )
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        , Return
+                            ( Just
+                                ( BinaryExpression LessThan
+                                    ( FunctionCall
+                                        ( TypeExpression
+                                            ( ElementaryType
+                                                ( UnsignedInteger
+                                                    ( Just 256 )
+                                                )
+                                            )
+                                        )
+                                        ( CommaArguments
+                                            [ IdentifierExpression
+                                                ( Identifier "h" )
+                                            ]
+                                        )
+                                    )
+                                    ( BinaryExpression Div
+                                        ( MemberAccess
+                                            ( MetaType
+                                                ( ElementaryType
+                                                    ( UnsignedInteger
+                                                        ( Just 256 )
+                                                    )
+                                                )
+                                            )
+                                            ( MemberAccessIdentifier
+                                                ( Identifier "max" )
+                                            )
+                                        )
+                                        ( TupleExpression
+                                            [ Just
+                                                ( BinaryExpression Add
+                                                    ( ExpressionLiteral
+                                                        ( NumberLiteral 1.0 Nothing )
+                                                    )
+                                                    ( BinaryExpression Mul
+                                                        ( FunctionCall
+                                                            ( MemberAccess
+                                                                ( IdentifierExpression
+                                                                    ( Identifier "BitMath" )
+                                                                )
+                                                                ( MemberAccessIdentifier
+                                                                    ( Identifier "mostSignificantBit" )
+                                                                )
+                                                            )
+                                                            ( CommaArguments
+                                                                [ IdentifierExpression
+                                                                    ( Identifier "tokenId" )
+                                                                ]
+                                                            )
+                                                        )
+                                                        ( ExpressionLiteral
+                                                            ( NumberLiteral 2.0 Nothing )
+                                                        )
+                                                    )
+                                                )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        ]
+                    }
+                )
+            ]
+        }
+    )
+]

@@ -5,6 +5,7 @@ module Parser where
 import Control.Monad (void)
 import Control.Monad.Combinators.Expr (Operator (..), makeExprParser)
 import Data.Char (chr)
+import Data.Maybe (maybeToList)
 import Data.List.NonEmpty qualified as NE
 import Data.Maybe (isJust)
 import Data.Set qualified as S
@@ -89,13 +90,42 @@ unicodeEscape = try $ do
 charLiteral :: Parser Char
 charLiteral = between (char '\'') (char '\'') (unicodeEscape <|> L.charLiteral)
 
+consecutiveStrings :: Parser Text -> Parser Text
+consecutiveStrings component = do
+  firstComponent <- component
+  rest <- many (try (sc *> component))
+  pure $ mconcat $ firstComponent : rest
+
 -- NOTE Oct 2, 2024: Still many differences between L.charLiteral and Solidity chars.
 --                   E.g.: \x takes two digits in Solidity, but many more in L.charLiteral
+
+genStringLiteral :: Char -> Parser Text
+genStringLiteral quote = T.pack <$> (char quote *> manyTill (unicodeEscape <|> L.charLiteral) (char quote))
+
 stringLiteral' :: Parser Text
-stringLiteral' = T.pack <$> (char '\'' *> manyTill (unicodeEscape <|> L.charLiteral) (char '\''))
+stringLiteral' = genStringLiteral '\''
 
 stringLiteral :: Parser Text
-stringLiteral = T.pack <$> (char '\"' *> manyTill (unicodeEscape <|> L.charLiteral) (char '\"'))
+stringLiteral = genStringLiteral '\"'
+
+
+genHexStringLiteral :: Char -> Parser Text
+genHexStringLiteral quote = T.pack <$> (keyword "hex" *> char quote *> manyTill L.charLiteral (char quote))
+
+hexStringLiteral' :: Parser Text
+hexStringLiteral' = genHexStringLiteral '\''
+
+hexStringLiteral :: Parser Text
+hexStringLiteral = genHexStringLiteral '\"'
+
+genUnicodeStringLiteral :: Char -> Parser Text
+genUnicodeStringLiteral quote = T.pack <$> (keyword "unicode" *> char quote *> manyTill L.charLiteral (char quote))
+
+unicodeStringLiteral' :: Parser Text
+unicodeStringLiteral' = genUnicodeStringLiteral '\''
+
+unicodeStringLiteral :: Parser Text
+unicodeStringLiteral = genUnicodeStringLiteral '\"'
 
 parsePragma :: Parser PragmaDefinition
 parsePragma = keyword "pragma" *> takeWhile1P Nothing (/= ';') <* semi >>= pure <$> PragmaDefinition <?> "Pragma"
@@ -731,14 +761,11 @@ parseLiteral =
   choice
     [ BooleanLiteral True <$ keyword "true",
       BooleanLiteral False <$ keyword "false",
-      StringLiteral <$> stringLiteral,
-      StringLiteral <$> stringLiteral',
+      StringLiteral <$> consecutiveStrings (try stringLiteral <|> try stringLiteral'),
       NumberLiteral <$> lexeme (chunk "0x" >> L.hexadecimal) <*> optional parseNumberUnit,
       parseNumberLiteral,
-      HexStringLiteral . T.pack <$> try (keyword "hex" >> char '"' >> manyTill L.charLiteral (char '"')),
-      HexStringLiteral . T.pack <$> try (keyword "hex" >> char '\'' >> manyTill L.charLiteral (char '\'')),
-      UnicodeStringLiteral . T.pack <$> try (keyword "unicode" >> char '"' >> manyTill L.charLiteral (char '"')),
-      UnicodeStringLiteral . T.pack <$> try (keyword "unicode" >> char '\'' >> manyTill L.charLiteral (char '\''))
+      HexStringLiteral <$> consecutiveStrings (try hexStringLiteral <|> try hexStringLiteral'),
+      UnicodeStringLiteral <$> consecutiveStrings (try unicodeStringLiteral <|> try unicodeStringLiteral')
     ]
     <* sc
 
