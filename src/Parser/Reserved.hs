@@ -171,6 +171,7 @@ reservedKeywords =
     "type",
     "ufixed", -- TODO: ("ufixed" [1-9][0-9]+ "x" [1-9][0-9]+);
     "unchecked",
+    "unicode",
     "uint",
     "uint8",
     "uint16",
