@@ -5,7 +5,6 @@ module Parser where
 import Control.Monad (void)
 import Control.Monad.Combinators.Expr (Operator (..), makeExprParser)
 import Data.Char (chr)
-import Data.Maybe (maybeToList)
 import Data.List.NonEmpty qualified as NE
 import Data.Maybe (isJust)
 import Data.Set qualified as S
@@ -788,10 +787,12 @@ parseDouble = checkNum . readMaybe . addZero =<< mconcat [nums, dot <|> expo]
 checkNum :: Maybe Double -> Parser Double
 checkNum = maybe (fail "Not a double") pure
 
-parseTypeName :: Parser TypeName
-parseTypeName = do
+parseTypeNameGen :: Bool -> Parser TypeName
+parseTypeNameGen mandatoryArrayType = do
   typ <- parseType
-  arr <- optional $ some parseArrayTypeStatus
+  arr <- if mandatoryArrayType
+          then Just <$> some parseArrayTypeStatusNonExpression
+          else optional $ some parseArrayTypeStatus
   pure $ case arr of
     Just expr -> ArrayType typ expr
     Nothing -> typ
@@ -803,6 +804,7 @@ parseTypeName = do
           MappingType <$> parseMappingType,
           IdentifierType <$> try parseIdentifierPath
         ]
+        
     parseArrayTypeStatus :: Parser ArrayTypeStatus
     parseArrayTypeStatus =
       brackets $
@@ -810,6 +812,15 @@ parseTypeName = do
           [ ArrayTypeExpression <$> parseExpression,
             ArrayTypeEmpty <$ sc
           ]
+
+    parseArrayTypeStatusNonExpression :: Parser ArrayTypeStatus
+    parseArrayTypeStatusNonExpression = brackets $ ArrayTypeEmpty <$ sc
+
+parseTypeName :: Parser TypeName
+parseTypeName = parseTypeNameGen False
+
+parseTypeNameNonExpression :: Parser TypeName
+parseTypeNameNonExpression = parseTypeNameGen True
 
 parseMappingType :: Parser MappingDefinition
 parseMappingType = do
@@ -840,14 +851,15 @@ parseExpression :: Parser Expression
 parseExpression = makeExprParser parseExpression' parseTable <* sc
 
 parseExpression' :: Parser Expression
-parseExpression' =
+parseExpression' = do
   choice
     [ PayableConversion <$> try (keyword "payable" *> parseCallArgumentList),
       MetaType <$> try (keyword "type" *> parens parseTypeName),
       NewType <$> try (keyword "new" *> parseTypeName),
       TupleExpression <$> parens (sepEndBy (optional parseExpression) comma),
       InlineArrayExpression <$> brackets (sepEndBy parseExpression comma),
-      IdentifierExpression <$> try (parseIdentifier <* notFollowedBy (symbol "[" >> symbol "]")),
+      TypeExpression <$> try parseTypeNameNonExpression, -- This exists for types like A.B[], where otherwise greedy parsing would match parseIdentifier first and be unable to backtrack
+      IdentifierExpression <$> try parseIdentifier,
       ExpressionLiteral <$> parseLiteral,
       TypeExpression <$> parseTypeName
     ]
