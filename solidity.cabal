@@ -82,11 +82,11 @@ test-suite solidity-test
     Solidity.VisibilitySpec
     TestUtils
 
-  build-tool-depends: hspec-discover:hspec-discover ^>=2.10
+  build-tool-depends: hspec-discover:hspec-discover ^>=2.11
   build-depends:
-    , hspec             ^>=2.10
+    , hspec             ^>=2.11
     , hspec-megaparsec  ^>=2.2
-    , megaparsec        ^>=9.3
+    , megaparsec        ^>=9.6
     , solidity
 
 test-suite solidity-golden

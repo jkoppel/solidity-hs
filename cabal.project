@@ -4,3 +4,5 @@ packages:
 package solidity
 
 with-compiler: ghc-9.8.4
+tests: True
+
